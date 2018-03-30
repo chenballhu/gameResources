@@ -222,7 +222,7 @@ function signUp1(){
 		shade: false,
 		maxmin: true, //开启最大化最小化按钮
 		area: ['893px', '600px'],
-		content: 'signUp'
+		content: 'toSignUp'
 	});
 	return;
 }
