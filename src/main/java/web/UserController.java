@@ -48,4 +48,11 @@ public class UserController {
 		return "index";
 		
 	}
+	
+	@RequestMapping("/toSignUp")
+	public String signUp() throws IOException{
+		
+		return "signUp";
+		
+	}
 }
