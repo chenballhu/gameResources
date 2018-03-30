@@ -100,7 +100,7 @@
 					<input id="inputPassword" type="text" placeholder="请输入密码" name="password" style="width:180px; height: 30px;"/>
 					<div style="margin-top: 40px;"></div>
 					<input type="button" value="登录" id="login1"	class="layui-btn layui-btn-radius layui-btn-normal" onclick="login()">
-					<input type="button" value="注册" id="register"	class="layui-btn layui-btn-radius layui-btn-normal" onclick="register()">
+					<input type="button" value="注册" id="signUp"	class="layui-btn layui-btn-radius layui-btn-normal" onclick="signUp1()">
 				</form>
 			</div>
 		</div>
@@ -214,11 +214,17 @@ function login(){
 	return;
 }
 
-function register(){
+function signUp1(){
 	layer.open({
-		tittle:'注册',
-		
+		type: 2,
+		title: '注册',
+		shadeClose: true,
+		shade: false,
+		maxmin: true, //开启最大化最小化按钮
+		area: ['893px', '600px'],
+		content: 'signUp'
 	});
+	return;
 }
 
 
