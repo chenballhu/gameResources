@@ -148,7 +148,7 @@
 <div style="margin-top: 20px;">
  <div class="layui-carousel" id="test2">
   <div carousel-item>
-    <div>条目1</div>
+    <image src="pictures/123.jpg"></image>
     <div>条目2</div>
     <div>条目3</div>
     <div>条目4</div>
@@ -177,8 +177,8 @@
 	
 
 
+	</div>
 </div>
-
 
 
 
