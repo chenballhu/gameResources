@@ -21,7 +21,7 @@
 			
 			$.ajax({
 				  type: 'POST',
-				  url: "signUp?name="+UserName+"&password="+password+,
+				  url: "signUp?name="+UserName+"&password="+password+sex+adult+like,
 				  success: function(data){
 					  if(data.state==1){
 						  layer.msg('用户名或密码错误');
