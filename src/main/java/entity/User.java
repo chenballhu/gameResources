@@ -1,6 +1,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class User implements Serializable{
 
@@ -11,17 +12,23 @@ public class User implements Serializable{
 	private int id;
 	private String name;
 	private String password;
+	private String sex;
+	private boolean isAdult;
+	private List like;
 	private boolean permission;
 	
 	public User(){
 		
 	}
 
-	public User(int id, String name, String password, boolean permission) {
+	public User(int id, String name, String password, String sex, boolean isAdult, List like, boolean permission) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.password = password;
+		this.sex = sex;
+		this.isAdult = isAdult;
+		this.like = like;
 		this.permission = permission;
 	}
 
@@ -49,6 +56,30 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public boolean isAdult() {
+		return isAdult;
+	}
+
+	public void setAdult(boolean isAdult) {
+		this.isAdult = isAdult;
+	}
+
+	public List getLike() {
+		return like;
+	}
+
+	public void setLike(List like) {
+		this.like = like;
+	}
+
 	public boolean isPermission() {
 		return permission;
 	}
@@ -66,9 +97,12 @@ public class User implements Serializable{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id;
+		result = prime * result + (isAdult ? 1231 : 1237);
+		result = prime * result + ((like == null) ? 0 : like.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + (permission ? 1231 : 1237);
+		result = prime * result + ((sex == null) ? 0 : sex.hashCode());
 		return result;
 	}
 
@@ -83,6 +117,13 @@ public class User implements Serializable{
 		User other = (User) obj;
 		if (id != other.id)
 			return false;
+		if (isAdult != other.isAdult)
+			return false;
+		if (like == null) {
+			if (other.like != null)
+				return false;
+		} else if (!like.equals(other.like))
+			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -95,12 +136,20 @@ public class User implements Serializable{
 			return false;
 		if (permission != other.permission)
 			return false;
+		if (sex == null) {
+			if (other.sex != null)
+				return false;
+		} else if (!sex.equals(other.sex))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", password=" + password + ", permission=" + permission + "]";
+		return "User [id=" + id + ", name=" + name + ", password=" + password + ", sex=" + sex + ", isAdult=" + isAdult
+				+ ", like=" + like + ", permission=" + permission + "]";
 	}
+
+	
 	
 }
