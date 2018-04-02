@@ -13,6 +13,6 @@
 		select id,name,password,permission from userInfo where name=#{name} and password=#{password}
 	</select>
 	<insert id="createUser" parameterType="entity.User">
-		insert into userInfo(id,name,password,permission)values(#{id},#{name},#{password},#{permission})
+		insert into userInfo(name,password,permission,sex,is_adult,`like`)values(#{name},#{password},#{permission},#{sex},#{adult},#{like})
 	</insert>
 </mapper>
