@@ -11,6 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import dao.UserDao;
+
 public class test {
 ClassPathXmlApplicationContext ctx;
 	
@@ -23,12 +25,16 @@ ClassPathXmlApplicationContext ctx;
 	public void DataSourceTest() throws SQLException{
 		DataSource ds = ctx.getBean("dataSource",DataSource.class);
 		Connection conn = ds.getConnection();
-		String sql = "select * from userInfo";
+		String sql = "insert into userInfo(name,password,permission,sex,is_adult,`like`)values('123','123',true,'ÄÐ',true,'AVG')";
 		Statement st = conn.createStatement();
-		ResultSet rs = st.executeQuery(sql);
-		while(rs.next()){
-			System.out.println(rs.getString("permission"));
-		}
+		int rs = st.executeUpdate(sql);
+		
 		conn.close();
+	}
+	
+	@Test
+	public void addUser() throws SQLException{
+		UserDao dao = ctx.getBean("userDao",UserDao.class);
+		dao. createUser("123","123",true,"man",true,"AVG");
 	}
 }

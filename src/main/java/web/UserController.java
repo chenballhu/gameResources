@@ -1,6 +1,7 @@
 package web;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.annotation.Resource;
 import javax.management.RuntimeErrorException;
@@ -50,9 +51,20 @@ public class UserController {
 	}
 	
 	@RequestMapping("/toSignUp")
-	public String signUp() throws IOException{
+	public String toSignUp() throws IOException{
 		
 		return "signUp";
+		
+	}
+	
+	@RequestMapping("/signUp")
+	public String signUp(String userName,String password,boolean permission,String sex,boolean adult,String like) throws IOException{
+		try{
+			userDao.createUser(userName, password, permission, sex, adult, like);
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return "index";
 		
 	}
 }

@@ -14,14 +14,14 @@ public class User implements Serializable{
 	private String password;
 	private String sex;
 	private boolean isAdult;
-	private List like;
+	private String like;
 	private boolean permission;
 	
 	public User(){
 		
 	}
 
-	public User(int id, String name, String password, String sex, boolean isAdult, List like, boolean permission) {
+	public User(int id, String name, String password, String sex, boolean isAdult, String like, boolean permission) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -30,66 +30,6 @@ public class User implements Serializable{
 		this.isAdult = isAdult;
 		this.like = like;
 		this.permission = permission;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getSex() {
-		return sex;
-	}
-
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
-
-	public boolean isAdult() {
-		return isAdult;
-	}
-
-	public void setAdult(boolean isAdult) {
-		this.isAdult = isAdult;
-	}
-
-	public List getLike() {
-		return like;
-	}
-
-	public void setLike(List like) {
-		this.like = like;
-	}
-
-	public boolean isPermission() {
-		return permission;
-	}
-
-	public void setPermission(boolean permission) {
-		this.permission = permission;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 	@Override
@@ -142,6 +82,66 @@ public class User implements Serializable{
 		} else if (!sex.equals(other.sex))
 			return false;
 		return true;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public boolean isAdult() {
+		return isAdult;
+	}
+
+	public void setAdult(boolean isAdult) {
+		this.isAdult = isAdult;
+	}
+
+	public String getLike() {
+		return like;
+	}
+
+	public void setLike(String like) {
+		this.like = like;
+	}
+
+	public boolean isPermission() {
+		return permission;
+	}
+
+	public void setPermission(boolean permission) {
+		this.permission = permission;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Override
