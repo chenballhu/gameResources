@@ -201,7 +201,7 @@ function login(){
 		  url: "login?name="+name+"&password="+password,
 		  success: function(data){
 			  if(data.state==1){
-				  layer.msg('用户名或密码错误');
+				  layer.msg(data.message);
 				  return;
 			  }
 			  $("#Logininfo").css("display","none");
