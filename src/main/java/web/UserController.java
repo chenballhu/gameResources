@@ -69,7 +69,7 @@ public class UserController {
 	}
 	
 	@RequestMapping("/list")
-	public String show(String id){
+	public String showList(String id){
 		
 		return "list";
 		
