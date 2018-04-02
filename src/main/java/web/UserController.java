@@ -65,6 +65,14 @@ public class UserController {
 			e.printStackTrace();
 		}
 		return "index";
+	
+	}
+	
+	@RequestMapping("/list")
+	public String show(String id){
+		
+		return "list";
 		
 	}
+	
 }

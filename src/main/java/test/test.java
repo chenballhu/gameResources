@@ -37,4 +37,16 @@ ClassPathXmlApplicationContext ctx;
 		UserDao dao = ctx.getBean("userDao",UserDao.class);
 		dao. createUser("123","123",true,"man",true,"AVG");
 	}
+	
+	@Test
+	public void test(){
+		double a=2.0,b=1.0,c=0.0,temp=0.0,sum=0.0;
+		for(int i=0;i<20;i++){
+			sum=+(a/b);
+			c=a+b;
+			b=a;
+			a=c;
+		}
+		System.out.println(sum);
+	}
 }

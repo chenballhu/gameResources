@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -135,12 +136,14 @@
   
   <!-- 轮播图1 -->
  <div class="layui-carousel" id="test1">
+ 	<div>NGC</div>
   <div carousel-item>
-    <div>条目1</div>
-    <div>条目2</div>
-    <div>条目3</div>
-    <div>条目4</div>
-    <div>条目5</div>
+  <c:forEach var="i" begin="1" end="9">
+  	
+  	<img src="pictures/NGC/${i}/${i}.jpg" onclick="list(${i})">
+  	
+  	
+  	</c:forEach>
   </div>
 </div>
 
@@ -148,7 +151,7 @@
 <div style="margin-top: 20px;">
  <div class="layui-carousel" id="test2">
   <div carousel-item>
-    <image src="pictures/123.jpg"></image>
+    <image src="pictures/NGC/1/1.jpg"></image>
     <div>条目2</div>
     <div>条目3</div>
     <div>条目4</div>
@@ -227,7 +230,9 @@ function signUp1(){
 	return;
 }
 
-
+function list(id){
+	window.location.href='list?id='+id
+}
 
 
 
