@@ -68,8 +68,15 @@ public class UserController {
 	
 	}
 	
-	@RequestMapping("/list")
+	@RequestMapping("/game")
 	public String showList(String id){
+		
+		return "game";
+		
+	}
+	
+	@RequestMapping("/list")
+	public String list(){
 		
 		return "list";
 		
