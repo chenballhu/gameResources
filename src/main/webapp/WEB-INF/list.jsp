@@ -52,8 +52,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>test</title>
   <link rel="stylesheet" href="layui/css/layui.css">
-	<script src="layui/layui.js"></script>
-	<script src="jquery-3.3.1.min.js"></script>
+	<script src="layui/layui.all.js"></script>
+	<script src="layui/jquery-3.3.1.min.js"></script>
 </head>
 <body class="layui-layout-body" style="background-color: #eeeeee">
 <div class="layui-layout layui-layout-admin">
@@ -64,14 +64,14 @@
     
     
     	<li class="layui-nav-item">
-        <a href="index.jsp">
+        <a href="toLogin">
         <i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe68e;</i>  
         	首页
         </a>       
       </li>
       
       
-      <li class="layui-nav-item"><a href="">
+      <li class="layui-nav-item"><a href="list">
       <i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe705;</i>
       	档案</a></li>
       <li class="layui-nav-item"><a href="">
@@ -100,6 +100,7 @@
  </div>
   
 	<div id="l1l" class="layui-anim layui-anim-up">
+	${list}
 	</div>
 	<div id="l1r" class="layui-anim layui-anim-scaleSpring">
 	</div>
@@ -131,7 +132,7 @@
 
 
 
-<script src="../src/layui.js"></script>
+
 <script>
 //JavaScript代码区域
 layui.use('element', function(){
@@ -139,7 +140,25 @@ layui.use('element', function(){
   
 });
 
-
+var data = ${list};
+          
+          //调用分页
+          laypage.render({
+            elem: '111'
+            ,count: data.length
+            ,jump: function(obj){
+              //模拟渲染
+              document.getElementById('111').innerHTML = function(){
+                var arr = []
+                ,thisData = data.concat().splice(obj.curr*obj.limit - obj.limit, obj.limit);
+                layui.each(thisData, function(index, item){
+                  arr.push('<li>'+ item +'</li>');
+                });
+                return arr.join('');
+              }();
+            }
+          });
+          
 	
 
 

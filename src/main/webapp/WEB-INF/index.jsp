@@ -45,6 +45,7 @@
   <link rel="stylesheet" href="layui/css/layui.css">
 	<script src="layui/layui.all.js"></script>
 	<script src="layui/jquery-3.3.1.min.js"></script>
+	
 </head>
 <body class="layui-layout-body" style="background-color: #eeeeee">
 <div class="layui-layout layui-layout-admin">
@@ -83,9 +84,12 @@
     <!-- 搜索栏 -->
      <div id="top_input" class="lf">
         <input id="input" type="text" placeholder="请输入您要搜索的内容" style="width:360px; height: 30px;"/>
-        <a href="http://www.layui.com" class="layui-btn layui-btn-radius layui-icon">&#xe615;&nbsp;&nbsp;搜索</a>
+        <a class="layui-btn layui-btn-radius layui-icon" onclick="search1()">&#xe615;&nbsp;&nbsp;搜索</a>
+        
     </div>
- 
+ 	
+
+ 	
  <!-- 分割用的div -->
  <div style="height: 30px;"></div>
   
@@ -120,14 +124,24 @@
 	<!-- 右边游戏信息栏 -->
 	<div id="d2" class="layui-anim layui-anim-scale">
 		<div id="hotOnclick">点击排行榜</div>
-		<div><a href="" style="color:red">1.xxx</a></div>
-		<div><a href="">1.xxx</a></div>
-		<div><a href="">1.xxx</a></div>
-		<div><a href="">1.xxx</a></div>
-		<div><a href="">1.xxx</a></div>
-		<div><a href="">1.xxx</a></div>
-		<div><a href="">1.xxx</a></div>
-		<div><a href="">1.xxx</a></div>		
+			<div id="hotOnclick1">
+				<script type="text/javascript">
+					window.onload=function(){
+						$.ajax({
+							  type: 'GET',
+							  url: "rank",
+							  success: function(data){
+								var rank = data.data;
+								var a = document.getElementById("hotOnclick1");
+								for(var i=0;i<rank.length;i++){
+									$("#hotOnclick1").append("<div><a href='game?id="+rank[i].id+"'>"+rank[i].cn+"</a></div>");
+								}
+							  },
+							  dataType: "json"
+							});
+					}
+				</script>
+			</div>
 	</div>
  
  
@@ -183,6 +197,23 @@
 <script>
 //JavaScript代码区域
 
+//获取登陆状态
+window.onload=function(){
+			var temp = document.cookie.split(";");
+			var name = "";
+			for(var i=0;i<temp.length;i++){
+				if("user"==temp[i].split("=")[0]){
+					name = temp[i].split("=")[1];
+				}
+			}
+			if(!name==""){
+				$("#Logininfo").css("display","none");
+				$("#info").css("display","block");
+				$("#showName").text("欢迎登陆"+name);
+			}
+		}
+
+//登陆
 function login(){
 	var name = document.getElementById('inputName').value;
 	var password = document.getElementById('inputPassword').value;
@@ -196,7 +227,8 @@ function login(){
 	}
 	$.ajax({
 		  type: 'POST',
-		  url: "login?name="+name+"&password="+password,
+		  data:{"name":name,"password":password},
+		  url: "login",
 		  success: function(data){
 			  if(data.state==1){
 				  layer.msg(data.message);
@@ -204,8 +236,15 @@ function login(){
 			  }
 			  $("#Logininfo").css("display","none");
 			  $("#info").css("display","block");
-			  
 			  $("#showName").text("欢迎登陆"+name);
+			  
+			  //保存用户登陆状态
+				var date=new Date();
+				var expireDays=1; //分钟
+				date.setTime(date.getTime()+expireDays*1000*60);
+			  document.cookie="user="+data.data.name+";expires="+date.toGMTString();
+			  //document.cookie="password="+data.data.password+";expires="+date.toGMTString();
+			  
 		  },
 		  dataType: "json"
 		});
@@ -225,11 +264,36 @@ function signUp1(){
 	return;
 }
 
+//游戏内页
 function list(id){
 	window.location.href='game?id='+id
 }
 
-
+//搜索功能
+function search1(){
+		var a = document.getElementById('input').value;
+		if(a==""){
+			window.location.href="list";
+		}else{
+			$.ajax({
+				  type: 'GET',
+				  url: "search",
+				  contentType:"application/UTF-8",
+				  data:{str:a},
+				  success: function(data){
+					  if(data.state==1){
+						  layer.msg(data.message);
+						  return;
+					  }else{
+						  location.href="list";
+					  }
+					  
+				  },
+				  dataType: "json"
+				});
+		}
+		
+	}
 
 
 

@@ -36,19 +36,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>test</title>
   <link rel="stylesheet" href="layui/css/layui.css">
-	<script src="layui/layui.js"></script>
-	<script src="jquery-3.3.1.min.js"></script>
+	<script src="layui/layui.all.js"></script>
+	<script src="layui/jquery-3.3.1.min.js"></script>
 </head>
 <body class="layui-layout-body" style="background-color: #eeeeee">
+
+
+
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header">
-    <div class="layui-logo">Test主页</div>
+    <div class="layui-logo">${map.cn}</div>
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
     
     
     	<li class="layui-nav-item">
-        <a href="index.jsp">
+        <a href="javascript:history.back(-1)">
         <i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe68e;</i>  
         	首页
         </a>       
@@ -80,20 +83,20 @@
  </div>
 
 <!-- 游戏封面 --> 
-<div id="gamelogo">
-	<img alt="" src="">
+<div>
+	<img id="gamelogo" src="pictures/${map.station}/${map.id}/${map.id}.jpg">
 </div>
 <!-- 游戏截图 -->
 <div id="g1">
-	<img alt="" src="">
+	<img alt="" src="pictures/${map.station}/${map.id}/${map.id}.1.jpg" style="width: 800px; height: 400px">
 </div>
 <!-- 游戏截图 -->
 <div id="g2">
-	<img alt="" src="">
+	<img alt="" src="pictures/${map.station}/${map.id}/${map.id}.2.jpg" style="width: 800px; height: 400px">
 </div>
 <!-- 游戏截图 -->
 <div id="g3">
-	<img alt="" src="">
+	<img alt="" src="pictures/${map.station}/${map.id}/${map.id}.3.jpg" style="width: 800px; height: 400px">
 </div>
 
 <!-- 分割用div -->
@@ -101,12 +104,11 @@
 
 <!-- 游戏简介 -->
 <div style="margin-top: 20px; font-size: 30px;color: white;">
-	游戏名字:XXX
+	游戏名字:${map.cn}
 </div>
 <div style="font-size:20px;color: black;">
-游戏中文名:<br>	英文名:<br>	平台:<br>	类别:<br>
+	英文名:${map.en}<br>	平台:${map.station }<br>	类别:${map.kind }<br>出版商:${map.company}<br>游戏人数:${map.player}
 </div>
-
 
 
 
@@ -136,20 +138,30 @@
   
   <div class="layui-footer">
     <!-- 底部固定区域 -->
-    © -----固定浮动底部栏-----   战舰烧酒阿鲁!
+    <input type="button" value="点击评论" id="comment"	class="layui-btn layui-btn-radius layui-btn-normal" onclick="comment()">
   </div>
 </div>
 
 
-
-<script src="../src/layui.js"></script>
 <script>
 //JavaScript代码区域
 layui.use('element', function(){
   var element = layui.element;
   
 });
-
+//评论
+function comment(){
+	layer.open({
+		type: 2,
+		title: '评论',
+		shadeClose: true,
+		shade: false,
+		maxmin: true, //开启最大化最小化按钮
+		area: ['893px', '600px'],
+		content: 'comment'
+	});
+	return;
+}
 
 	
 

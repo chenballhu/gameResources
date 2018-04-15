@@ -13,5 +13,12 @@ public interface UserDao {
 			@Param("sex")String sex,@Param("adult")boolean isAdult,@Param("like")String like) throws SQLException;
 	User login(@Param("name")String name,@Param("password")String password);
 	User findUserByName(String name);
-	Map showList();
+	//排行榜
+	List<String> showRank();
+	//游戏内页
+	Map<String,String> showGame(String id);
+	//搜索
+	List<String> search1(@Param("str")String str);
+	//显示评论
+	List showComment(@Param("id")int id);
 }

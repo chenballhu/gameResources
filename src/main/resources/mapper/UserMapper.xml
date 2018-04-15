@@ -15,4 +15,22 @@
 	<insert id="createUser" parameterType="entity.User">
 		insert into userInfo(name,password,permission,sex,is_adult,`like`)values(#{name},#{password},#{permission},#{sex},#{adult},#{like})
 	</insert>
+	<select id="showRank" parameterType="Object" resultType="Map">
+		select id,cn,hot from list_rank order by hot DESC limit 10
+	</select>
+	<select id="showGame" parameterType="Object" resultType="Map">
+		select * from list_rank where id=#{id}
+	</select>
+	<select id="search1" parameterType="Object" resultType="Map">
+		select * from list_rank
+		<where>
+			`cn` like '%${str}%'
+		</where>
+	</select>
+	<select id="showComment" parameterType="Object" resultType="Map">
+		select user,value from comment
+		<where>
+			`id` = #{id}
+		</where>
+	</select>
 </mapper>

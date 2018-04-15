@@ -2,9 +2,13 @@ package web;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.management.RuntimeErrorException;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,15 +30,15 @@ public class UserController {
 	
 	@ResponseBody
 	@RequestMapping( value="/login")
-	public Object login(String name,String password,HttpServletRequest req){
+	public Object login(String name,String password,HttpServletRequest req,HttpServletResponse res){
 		User user = userDao.login(name, password);
 		try{
 			if(user==null || user.getName().equals("")){
-				return new JsonResult(1,user,"�˺Ż��������");
+				return new JsonResult(1,user,"用户名或者密码错误");
 			}
 			if(user.getName()!=null && !user.getName().equals("")){
 				
-				return new JsonResult(0,user,"��½�ɹ�");
+				return new JsonResult(0,user,"登陆成功");
 			}
 		}catch(RuntimeErrorException e){
 			e.printStackTrace();
@@ -67,19 +71,68 @@ public class UserController {
 		return "index";
 	
 	}
-	
-	@RequestMapping("/game")
-	public String showList(String id){
+	//排行榜
+	@ResponseBody
+	@RequestMapping(value="/rank")
+	public Object rank(HttpServletRequest req){
+		try{
+			List<String> list = userDao. showRank();
+			return new JsonResult(list);
+		}catch(RuntimeErrorException e){
+			e.printStackTrace();
+			return new JsonResult(0,e);
+		}
 		
+		
+	}
+	//游戏内页
+	@RequestMapping(value="/game")
+	public Object showGame(String id,HttpServletRequest req){
+		Map<String,String> map = new HashMap<String,String>();
+		map = userDao.showGame(id);
+		req.setAttribute("map", map);
 		return "game";
 		
 	}
 	
+	//索引页
 	@RequestMapping("/list")
-	public String list(){
-		
-		return "list";
-		
+	public Object showList(String str,HttpServletRequest req) throws ServletException, IOException{
+		try{
+			List list = userDao.search1(str);
+			req.setAttribute("list", list);
+			return new JsonResult(list);
+		}catch(RuntimeErrorException e){
+			return new JsonResult(0,e);
+		}
+
 	}
 	
+	//搜索
+	@ResponseBody
+	@RequestMapping("/search")
+	public Object search(String str,HttpServletRequest req){
+		try{
+			List list = userDao.search1(str);
+			req.setAttribute("list", list);
+			return new JsonResult(list);
+		}catch(RuntimeErrorException e){
+			return new JsonResult(0,e);
+		}
+	}
+	
+	//显示评论
+	@ResponseBody
+	@RequestMapping("/showComment")
+	public Object showComment(int id){
+		List<String> list = userDao.showComment(id);
+		return new JsonResult(list);
+	}
+	
+	//评论
+	@RequestMapping("/comment")
+	public Object comment(int id,String user,String value){
+		
+		return "comment";
+	}
 }
