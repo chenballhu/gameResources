@@ -15,29 +15,15 @@
 		layui.use('form', function(){
   			var form = layui.form;
 		});
-		function isExist(){
-			var userName = document.getElementById('userName').value;
-			var password = document.getElementById('password').value;
-			var sex = document.getElementById('sex').value;
-			var adult = document.getElementById('adult').value;
-			var like = document.getElementById('like').value;
-			
-			$.ajax({
-				type: 'POST',
-				url: "signUp?name="+UserName+"&password="+password+sex+adult+like,
-				success: function(data){
-					if(data.state==1){
-						layer.msg('用户名或密码错误');
-						return;
-					 }
-				},
-				dataType: "json"
-				});
-		}
+		
   	</script>
 
 	<div style="padding: 15px;">
-		<form class="layui-form" action="comment">
+		<form class="layui-form" action="comment" onsubmit="return sub()">
+			<!-- 获取游戏id -->
+			<input type="text" name="id" value="${id}" style="display:none"/>
+			<!-- 获取用户名 -->
+			<input type="text" id="user" name="user" value="" style="display:none"/>
   			<div class="layui-form-item">
     			<label class="layui-form-label">CPU:</label>
     			<div class="layui-input-block">
@@ -91,27 +77,77 @@
     			<div class="layui-input-block" >
       				<input type="radio" name="sys" value="win" title="windows" checked>
       				<input type="radio" name="sys" value="mac" title="mac OS">
-      				<input type="radio" name="gd" value="else" title="其他">
+      				<input type="radio" name="sys" value="else" title="其他">
     			</div>
   			</div>
   			
   			<div class="layui-form-item layui-form-text">
     			<label class="layui-form-label">评论：</label>
     			<div class="layui-input-block">
-      				<textarea name="text1" placeholder="请输入内容" required  lay-verify="required" class="layui-textarea"></textarea>
+      				<textarea name="value" placeholder="请输入内容" required  lay-verify="required" class="layui-textarea"></textarea>
     			</div>
   			</div>
   			
   			<div class="layui-form-item">
     			<div class="layui-input-block">
-     				<button class="layui-btn" lay-submit lay-filter="form">立即提交</button>
+     				<button class="layui-btn" lay-submit lay-filter="form" >立即提交</button>
      				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
     			</div>
   			</div>
 		</form>
 	</div>
  	
- 	
+ 	<script type="text/javascript">
+ 		function sub(){
+ 			try{
+ 				var temp = document.cookie.split(";");
+ 				var name = "";
+ 				for(var i=0;i<temp.length;i++){
+ 					if("user"==temp[i].split("=")[0]){
+ 						name = temp[i].split("=")[1];
+ 					}
+ 				}
+ 				if(name==""){
+ 					
+ 					return false;
+ 				}
+ 	 			document.getElementById("user").value = name;
+ 			}catch(err){
+ 				layer.msg('不能获取登陆状态'); 
+ 				return false;
+ 			}
+ 			
+ 			
+ 			var user = "";
+ 			user = document.getElementById("user").value;
+ 			
+ 			if(user==""){
+ 				layer.msg("不能获取用户名");
+ 				return false;
+ 			}
+ 			layer.msg("评论成功！！");
+ 			setTimeout(close(),2000)
+ 		}
+ 		//获取cookies的用户名
+ 		window.onload=function(){
+ 			var temp = document.cookie.split(";");
+			var name = "";
+			for(var i=0;i<temp.length;i++){
+				if("user"==temp[i].split("=")[0]){
+					name = temp[i].split("=")[1];
+				}
+			}
+			if(name==""){
+				layer.msg('不能获取登陆状态'); 
+				setTimeout(close(),2000)
+				return;
+			}
+ 			document.getElementById("user").value = name;
+ 			
+ 			
+ 		}
+
+ 	</script>
 	
 </body>
 </html>

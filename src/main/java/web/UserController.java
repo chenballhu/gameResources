@@ -2,6 +2,7 @@ package web;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +77,7 @@ public class UserController {
 	@RequestMapping(value="/rank")
 	public Object rank(HttpServletRequest req){
 		try{
-			List<String> list = userDao. showRank();
+			List<String> list = userDao.showRank();
 			return new JsonResult(list);
 		}catch(RuntimeErrorException e){
 			e.printStackTrace();
@@ -129,10 +130,33 @@ public class UserController {
 		return new JsonResult(list);
 	}
 	
+	//前往评论页
+	@RequestMapping("/toComment")
+	public Object toComment(int id,HttpServletRequest req){
+		req.setAttribute("id", id);
+		return "comment";
+	}
+	
 	//评论
 	@RequestMapping("/comment")
-	public Object comment(int id,String user,String value){
-		
+	public Object comment(int id,String user,String value,String cpu,String memory,String HD,String gd,String sys){
+		//有bug
+		List list = new ArrayList();
+		list.add(id);
+		list.add(user);
+		list.add(value);
+		list.add(cpu);
+		list.add(memory);
+		list.add(HD);
+		list.add(gd);
+		list.add(sys);
+		for(int i=0;i<list.size();i++){
+			if(list.get(i).equals("") || list.get(i)==null){
+				return null;
+			}
+			break;
+		}
+		userDao.comment(id, user, value, cpu, memory, HD, gd, sys);
 		return "comment";
 	}
 }

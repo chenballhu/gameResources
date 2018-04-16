@@ -38,7 +38,7 @@
 			font-size: 20px;			
 		}
 </style>
-
+	
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>稀缺游戏周边资源整合与管理平台</title>
@@ -125,8 +125,9 @@
 	<div id="d2" class="layui-anim layui-anim-scale">
 		<div id="hotOnclick">点击排行榜</div>
 			<div id="hotOnclick1">
-				<script type="text/javascript">
+				<script>
 					window.onload=function(){
+						console.log("加载排行榜失败");
 						$.ajax({
 							  type: 'GET',
 							  url: "rank",
@@ -136,6 +137,9 @@
 								for(var i=0;i<rank.length;i++){
 									$("#hotOnclick1").append("<div><a href='game?id="+rank[i].id+"'>"+rank[i].cn+"</a></div>");
 								}
+							  },
+							  error:function(){
+								console.log("加载排行榜失败");
 							  },
 							  dataType: "json"
 							});
@@ -240,7 +244,7 @@ function login(){
 			  
 			  //保存用户登陆状态
 				var date=new Date();
-				var expireDays=1; //分钟
+				var expireDays=20; //分钟
 				date.setTime(date.getTime()+expireDays*1000*60);
 			  document.cookie="user="+data.data.name+";expires="+date.toGMTString();
 			  //document.cookie="password="+data.data.password+";expires="+date.toGMTString();

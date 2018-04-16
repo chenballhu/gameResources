@@ -33,4 +33,7 @@
 			`id` = #{id}
 		</where>
 	</select>
+	<insert id="comment" parameterType="Object">
+		insert into comment(id,user,value,cpu,memory,HD,gd,sys)values(#{id},#{user},#{value},#{cpu},#{memory},#{HD},#{gd},#{sys})
+	</insert>
 </mapper>

@@ -113,24 +113,15 @@
 
 
 <!-- 评价系统 -->
-<fieldset class="layui-elem-field" style="width: 800px;margin-top: 20px;">
-  <legend>A评价</legend>
+<fieldset class="layui-elem-field" id="comment" style="width: 800px;margin-top: 20px;">
+  <legend>评论区</legend>
   <div class="layui-field-box">
-    你可以在这里放任何内容
+    <fieldset class="layui-elem-field" style="width: 800px;">
+  
+</fieldset>
   </div>
 </fieldset>
-<fieldset class="layui-elem-field" style="width: 800px;">
-  <legend>B评价</legend>
-  <div class="layui-field-box" >
-    你可以在这里放任何内容
-  </div>
-</fieldset>
-<fieldset class="layui-elem-field" style="width: 800px;">
-  <legend>C评价</legend>
-  <div class="layui-field-box">
-    你可以在这里放任何内容
-  </div>
-</fieldset>
+
   
     
     </div>
@@ -158,12 +149,36 @@ function comment(){
 		shade: false,
 		maxmin: true, //开启最大化最小化按钮
 		area: ['893px', '600px'],
-		content: 'comment'
+		content: 'toComment?id=${map.id}'
 	});
 	return;
 }
 
-	
+window.onload=function(){
+	var str = ${map.id};
+	$.ajax({
+		  type: 'GET',
+		  url: "showComment",
+		  contentType:"application/UTF-8",
+		  data:{id:str},
+		  success: function(data){
+			  if(data.state==1){
+				  layer.msg(data.message);
+				  return;
+			  }else{
+				  var list = data.data;
+				  if(list.length==0){
+					  return;
+				  }
+				  for(var i=0;i<list.length;i++){
+						$("#comment").append("<div class='layui-field-box'><fieldset class='layui-elem-field' style='width: 800px;'><legend>用户："+list[i].user+"</legend><div class='layui-field-box' >"+list[i].value+"</div>");
+					}
+			  }
+			  
+		  },
+		  dataType: "json"
+		});
+}	
 
 
 
