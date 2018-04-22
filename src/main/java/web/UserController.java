@@ -28,7 +28,7 @@ public class UserController {
 	
 	@Resource
 	UserDao userDao;
-	
+	//登陆
 	@ResponseBody
 	@RequestMapping( value="/login")
 	public Object login(String name,String password,HttpServletRequest req,HttpServletResponse res){
@@ -61,17 +61,35 @@ public class UserController {
 		return "signUp";
 		
 	}
-	
+	//注册
 	@RequestMapping("/signUp")
-	public String signUp(String userName,String password,boolean permission,String sex,boolean adult,String like) throws IOException{
+	public Object signUp(String userName,String password,boolean permission,String sex,boolean adult,String like) throws IOException{
 		try{
+			User user = userDao.findUserByName(userName);
+			//用户名不重复时才能注册
+			if(user!=null && !user.getName().equals("")){
+				return new JsonResult(1,user,"用户名重复");
+			}
+			System.out.println(user);
 			userDao.createUser(userName, password, permission, sex, adult, like);
+			return new JsonResult(0,"",userName+"注册成功！！");
 		}catch(SQLException e){
 			e.printStackTrace();
 		}
-		return "index";
-	
+		return like;	
 	}
+	//注册验证
+	@ResponseBody
+	@RequestMapping("/checkSignUp")
+	public Object checkSignUp(String userName){
+		User user = userDao.findUserByName(userName);
+		//用户名不重复时才能注册
+		if(user!=null && !user.getName().equals("")){
+			return new JsonResult(1,user,"用户名重复");
+		}
+		return new JsonResult(0,"","注册成功");
+	}
+	
 	//排行榜
 	@ResponseBody
 	@RequestMapping(value="/rank")
@@ -83,8 +101,19 @@ public class UserController {
 			e.printStackTrace();
 			return new JsonResult(0,e);
 		}
-		
-		
+	}
+	//游戏推荐
+	//排行榜
+	@ResponseBody
+	@RequestMapping("/recommend")
+	public Object recommend(String like){
+		try{
+			List<String> list = userDao.recommend(like);
+			return new JsonResult(list);
+		}catch(RuntimeErrorException e){
+			e.printStackTrace();
+			return new JsonResult(0,e);
+		}
 	}
 	//游戏内页
 	@RequestMapping(value="/game")
@@ -99,10 +128,11 @@ public class UserController {
 	//索引页
 	@RequestMapping("/list")
 	public Object showList(String str,HttpServletRequest req) throws ServletException, IOException{
+		
 		try{
 			List list = userDao.search1(str);
-			req.setAttribute("list", list);
-			return new JsonResult(list);
+			req.setAttribute("search", list);
+			return "list";
 		}catch(RuntimeErrorException e){
 			return new JsonResult(0,e);
 		}

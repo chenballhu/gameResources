@@ -6,11 +6,14 @@
 	<insert id="addUser" parameterType="entity.User">
 		insert into userInfo(id,name,password,permission)values(#{id},#{name},#{password},#{permission})
 	</insert>
-	<select id="findUserById" parameterType="Object" resultType="entity.User">
-		select id,name,password,permission from userInfo where name=#{name} and password=#{password)
+	<select id="findUserByName" parameterType="Object" resultType="entity.User">
+		select id,name,password,permission from userInfo where name=#{name}
 	</select>
 	<select id="login" parameterType="Object" resultType="entity.User">
 		select id,name,password,permission from userInfo where name=#{name} and password=#{password}
+	</select>
+	<select id="recommend" parameterType="Object" resultType="Map">
+		select id,cn from list_rank where `like`=#{like} order by hot DESC limit 5
 	</select>
 	<insert id="createUser" parameterType="entity.User">
 		insert into userInfo(name,password,permission,sex,is_adult,`like`)values(#{name},#{password},#{permission},#{sex},#{adult},#{like})

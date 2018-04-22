@@ -15,29 +15,50 @@
 		layui.use('form', function(){
   			var form = layui.form;
 		});
+		layui.use('layer', function(){
+			  var layer = layui.layer;
+			});              
 		function isExist(){
+			
 			var userName = document.getElementById('userName').value;
 			var password = document.getElementById('password').value;
-			var sex = document.getElementById('sex').value;
-			var adult = document.getElementById('adult').value;
-			var like = document.getElementById('like').value;
-			
+			var sex = document.getElementsByName('sex').value;
+			var adult = document.getElementsByName('adult').value;
+			var like = document.getElementsByName('like').value;
+			var ajaxFlag = false; 
 			$.ajax({
-				type: 'POST',
-				url: "signUp?name="+UserName+"&password="+password+sex+adult+like,
-				success: function(data){
-					if(data.state==1){
-						layer.msg('用户名或密码错误');
-						return;
-					 }
-				},
-				dataType: "json"
+				  type: 'GET',
+				  url: "checkSignUp",
+				  contentType:"application/UTF-8",
+				  data:{"userName":userName},
+				  async:false,//设置同步方式，非异步！  
+			      cache:false,//严格禁止缓存！
+				  success: function(data){
+					  if(data.state==1){
+						  layer.msg(data.message);
+						  ajaxFlag=false; 
+					  }else{
+						  ajaxFlag=true; 
+					  }
+				  },
+				  dataType: "json"
 				});
+			
+			if(!ajaxFlag){
+				return false;
+			}else{
+				layer.msg("注册成功",function(){
+				layer.closeAll();
+				});
+
+				return true;
+			}
+			
 		}
   	</script>
 
 	<div style="padding: 15px;">
-		<form class="layui-form" action="signUp">
+		<form class="layui-form" action="signUp" onsubmit="return isExist()">
 			<div class="layui-form-item">
     			<label class="layui-form-label">账号：</label>
     			<div class="layui-input-inline">

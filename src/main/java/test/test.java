@@ -15,6 +15,7 @@ import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import dao.UserDao;
+import entity.User;
 
 public class test {
 ClassPathXmlApplicationContext ctx;
@@ -41,6 +42,13 @@ ClassPathXmlApplicationContext ctx;
 	public void addUser() throws SQLException{
 		UserDao dao = ctx.getBean("userDao",UserDao.class);
 		dao. createUser("123","123",true,"man",true,"AVG");
+	}
+	
+	@Test
+	public void findUser() throws SQLException{
+		UserDao dao = ctx.getBean("userDao",UserDao.class);
+		User user = dao.findUserByName("test");
+		System.out.println(user);
 	}
 	
 	@Test

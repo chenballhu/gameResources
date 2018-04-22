@@ -12,9 +12,12 @@ public interface UserDao {
 	void createUser(@Param("name")String name,@Param("password")String password,@Param("permission")boolean permission,
 			@Param("sex")String sex,@Param("adult")boolean isAdult,@Param("like")String like) throws SQLException;
 	User login(@Param("name")String name,@Param("password")String password);
+	//判断注册时有没有相同用户名
 	User findUserByName(String name);
 	//排行榜
 	List<String> showRank();
+	//推荐
+	List<String> recommend(@Param("like")String like);
 	//游戏内页
 	Map<String,String> showGame(String id);
 	//搜索

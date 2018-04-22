@@ -125,26 +125,7 @@
 	<div id="d2" class="layui-anim layui-anim-scale">
 		<div id="hotOnclick">点击排行榜</div>
 			<div id="hotOnclick1">
-				<script>
-					window.onload=function(){
-						console.log("加载排行榜失败");
-						$.ajax({
-							  type: 'GET',
-							  url: "rank",
-							  success: function(data){
-								var rank = data.data;
-								var a = document.getElementById("hotOnclick1");
-								for(var i=0;i<rank.length;i++){
-									$("#hotOnclick1").append("<div><a href='game?id="+rank[i].id+"'>"+rank[i].cn+"</a></div>");
-								}
-							  },
-							  error:function(){
-								console.log("加载排行榜失败");
-							  },
-							  dataType: "json"
-							});
-					}
-				</script>
+				
 			</div>
 	</div>
  
@@ -214,7 +195,24 @@ window.onload=function(){
 				$("#Logininfo").css("display","none");
 				$("#info").css("display","block");
 				$("#showName").text("欢迎登陆"+name);
+				$("#showName").append("<a style='font-size: 20px;margin-left: 20px' onclick='signOut()'>注销</a>");
 			}
+			//获取排行榜
+			$.ajax({
+				  type: 'GET',
+				  url: "rank",
+				  success: function(data){
+					var rank = data.data;
+					var a = document.getElementById("hotOnclick1");
+					for(var i=0;i<rank.length;i++){
+						$("#hotOnclick1").append("<div><a href='game?id="+rank[i].id+"'>"+rank[i].cn+"</a></div>");
+					}
+				  },
+				  error:function(){
+					console.log("加载排行榜失败");
+				  },
+				  dataType: "json"
+				});
 		}
 
 //登陆
@@ -241,13 +239,32 @@ function login(){
 			  $("#Logininfo").css("display","none");
 			  $("#info").css("display","block");
 			  $("#showName").text("欢迎登陆"+name);
+			  $("#showName").append("<a style='font-size: 20px;margin-left: 20px' onclick='signOut()'>注销</a>");
 			  
 			  //保存用户登陆状态
 				var date=new Date();
-				var expireDays=20; //分钟
+				var expireDays=30; //分钟
 				date.setTime(date.getTime()+expireDays*1000*60);
 			  document.cookie="user="+data.data.name+";expires="+date.toGMTString();
 			  //document.cookie="password="+data.data.password+";expires="+date.toGMTString();
+			  
+			  //获取推荐
+			  $.ajax({
+				  type: 'GET',
+				  url: "recommend",
+				  contentType:"application/UTF-8",
+				  data:{"like":like},
+			      cache:false,//严格禁止缓存！
+				  success: function(data2){
+					  if(data.state==1){
+						  layer.msg(data.message);
+						  ajaxFlag=false; 
+					  }else{
+						  ajaxFlag=true; 
+					  }
+				  },
+				  dataType: "json"
+				});
 			  
 		  },
 		  dataType: "json"
@@ -255,6 +272,24 @@ function login(){
 	return;
 }
 
+//注销登陆
+function signOut(){
+	var date=new Date();
+	date.setTime(date.getTime()-1);
+	var temp = document.cookie.split(";");
+	var name = "";
+	for(var i=0;i<temp.length;i++){
+		if("user"==temp[i].split("=")[0]){
+			name = temp[i].split("=")[1];
+		}
+	}
+	if(name!=""){
+		document.cookie= "user="+name+";expires="+date.toGMTString();
+		location.reload("ture");
+	}
+}
+
+//注册
 function signUp1(){
 	layer.open({
 		type: 2,
@@ -289,7 +324,7 @@ function search1(){
 						  layer.msg(data.message);
 						  return;
 					  }else{
-						  location.href="list";
+						  location.href="list?str="+a;
 					  }
 					  
 				  },
