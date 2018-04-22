@@ -50,7 +50,7 @@
 <body class="layui-layout-body" style="background-color: #eeeeee">
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header">
-    <div class="layui-logo">yanhan</div>
+    <div class="layui-logo"><a href="admin/config">yanhan</a></div>
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
     
@@ -186,9 +186,13 @@
 window.onload=function(){
 			var temp = document.cookie.split(";");
 			var name = "";
+			var like = "";
 			for(var i=0;i<temp.length;i++){
 				if("user"==temp[i].split("=")[0]){
 					name = temp[i].split("=")[1];
+				}
+				if("like"==temp[i].split("=")[0]){
+					like = temp[i].split("=")[1];
 				}
 			}
 			if(!name==""){
@@ -210,6 +214,27 @@ window.onload=function(){
 				  },
 				  error:function(){
 					console.log("加载排行榜失败");
+				  },
+				  dataType: "json"
+				});
+			//获取推荐
+			$.ajax({
+				  type: 'GET',
+				  url: "recommend",
+				  contentType:"application/UTF-8",
+				  data:{"like":like},
+				  success: function(data2){
+					  if(data2.state==1){
+						  layer.msg(data2.message);
+						  return; 
+					  }
+					  $("#info").append("<div style='margin-top: 30px'>今日推荐</div>");
+					  var cn = data2.data;
+					  console.log(cn);
+					  for(var i=0;i<cn.length;i++){
+						  $("#info").append("<div><a href='game?id="+cn[i].id+"'>"+cn[i].cn+"</a></div>");
+					  }
+					  
 				  },
 				  dataType: "json"
 				});
@@ -246,29 +271,18 @@ function login(){
 				var expireDays=30; //分钟
 				date.setTime(date.getTime()+expireDays*1000*60);
 			  document.cookie="user="+data.data.name+";expires="+date.toGMTString();
+			  document.cookie="like="+data.data.like+";expires="+date.toGMTString();
 			  //document.cookie="password="+data.data.password+";expires="+date.toGMTString();
-			  
+			  //location.reload(ture);
 			  //获取推荐
-			  $.ajax({
-				  type: 'GET',
-				  url: "recommend",
-				  contentType:"application/UTF-8",
-				  data:{"like":like},
-			      cache:false,//严格禁止缓存！
-				  success: function(data2){
-					  if(data.state==1){
-						  layer.msg(data.message);
-						  ajaxFlag=false; 
-					  }else{
-						  ajaxFlag=true; 
-					  }
-				  },
-				  dataType: "json"
-				});
+			 
 			  
 		  },
 		  dataType: "json"
 		});
+	
+	 
+	
 	return;
 }
 

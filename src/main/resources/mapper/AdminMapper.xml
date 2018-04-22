@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="dao.AdminDao">
+	<select id="findAllUser" parameterType="Object" resultType="entity.User">
+		select * from userInfo
+	</select>
+	<select id="findUserByName" parameterType="Object" resultType="entity.User">
+		select * from userInfo where name=#{name}
+	</select>
+	<update id="setPermission1"  parameterType="Object">
+        update userInfo set permission=1 where id=#{id}
+    </update>
+    <update id="setPermission2"  parameterType="Object">
+        update userInfo set permission=0 where id=#{id}
+    </update>
+    
+    <select id="findAllGame" parameterType="Object" resultType="Map">
+		select c.id,cn,value from comment as c,list_rank as l where c.id=l.id
+	</select>
+	<delete id="delComment" parameterType="int">
+     delete from comment where id=#{id}
+    </delete>
+</mapper>

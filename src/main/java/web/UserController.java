@@ -103,7 +103,6 @@ public class UserController {
 		}
 	}
 	//游戏推荐
-	//排行榜
 	@ResponseBody
 	@RequestMapping("/recommend")
 	public Object recommend(String like){
@@ -188,5 +187,12 @@ public class UserController {
 		}
 		userDao.comment(id, user, value, cpu, memory, HD, gd, sys);
 		return "comment";
+	}
+	
+	//前往勘误页
+	@RequestMapping("/toDebug")
+	public Object toDebug(int id,HttpServletRequest req){
+		req.setAttribute("id", id);
+		return "debug";
 	}
 }

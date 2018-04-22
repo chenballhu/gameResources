@@ -61,6 +61,15 @@ ClassPathXmlApplicationContext ctx;
 	}
 	
 	@Test
+	public void recommend() throws SQLException{
+		UserDao dao = ctx.getBean("userDao",UserDao.class);
+		List list = dao.recommend("");
+		Map map = new HashMap();
+		
+		System.out.println(list.toString());
+	}
+	
+	@Test
 	public void game() throws SQLException{
 		UserDao dao = ctx.getBean("userDao",UserDao.class);
 		

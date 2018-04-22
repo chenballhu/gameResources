@@ -19,7 +19,7 @@
 			  var layer = layui.layer;
 			});              
 		function isExist(){
-			
+			layer.closeAll();
 			var userName = document.getElementById('userName').value;
 			var password = document.getElementById('password').value;
 			var sex = document.getElementsByName('sex').value;
@@ -48,7 +48,7 @@
 				return false;
 			}else{
 				layer.msg("注册成功",function(){
-				layer.closeAll();
+					layer.closeAll();
 				});
 
 				return true;

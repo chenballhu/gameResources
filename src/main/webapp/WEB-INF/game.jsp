@@ -130,6 +130,7 @@
   <div class="layui-footer">
     <!-- 底部固定区域 -->
     <input type="button" value="点击评论" id="comment"	class="layui-btn layui-btn-radius layui-btn-normal" onclick="comment()">
+    <input type="button" value="勘误" id="debug"	class="layui-btn layui-btn-radius layui-btn-normal" onclick="debug()">
   </div>
 </div>
 
@@ -142,6 +143,19 @@ layui.use('element', function(){
 });
 //评论
 function comment(){
+	
+	var temp = document.cookie.split(";");
+	var name = "";
+	for(var i=0;i<temp.length;i++){
+		if("user"==temp[i].split("=")[0]){
+			name = temp[i].split("=")[1];
+		}
+	}
+	if(name==""){
+		layer.msg("请先登陆");
+		return;
+	}
+	
 	layer.open({
 		type: 2,
 		title: '评论',
@@ -150,6 +164,31 @@ function comment(){
 		maxmin: true, //开启最大化最小化按钮
 		area: ['893px', '600px'],
 		content: 'toComment?id=${map.id}'
+	});
+	return;
+}
+//勘误
+function debug(){
+	var temp = document.cookie.split(";");
+	var name = "";
+	for(var i=0;i<temp.length;i++){
+		if("user"==temp[i].split("=")[0]){
+			name = temp[i].split("=")[1];
+		}
+	}
+	if(name==""){
+		layer.msg("请先登陆");
+		return;
+	}
+	
+	layer.open({
+		type: 2,
+		title: '勘误',
+		shadeClose: true,
+		shade: false,
+		maxmin: true, //开启最大化最小化按钮
+		area: ['893px', '600px'],
+		content: 'toDebug?id=${map.id}'
 	});
 	return;
 }
