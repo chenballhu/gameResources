@@ -50,7 +50,7 @@
 <body class="layui-layout-body" style="background-color: #eeeeee">
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header">
-    <div class="layui-logo"><a href="../toLogin">yanhan</a></div>
+    <div class="layui-logo"><a href="../index">yanhan</a></div>
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
     
@@ -136,7 +136,9 @@ window.onload=function(){
 }
 //删除评论
 function del(id){
-	layer.confirm('是否删除', {icon: 3, title:'删除评论'}, function(index){
+	layer.confirm('是否删除', {icon: 3, title:'删除评论',end:function(){
+		setTimeout("location.reload(true)", 1000);
+	}}, function(index){
 		$.ajax({
 			  type: 'GET',
 			  data:{'id':id},

@@ -29,6 +29,12 @@
 			margin-top: 20px;
 			background-color: #5FB878;
 		}
+		#tag1{
+			margin-left: 50px;
+		}
+		#tag2{
+			margin-left: 10px;
+		}
 		
 </style>
 
@@ -163,7 +169,8 @@ function comment(){
 		shade: false,
 		maxmin: true, //开启最大化最小化按钮
 		area: ['893px', '600px'],
-		content: 'toComment?id=${map.id}'
+		content: 'toComment?id=${map.id}',
+		end:function(){location.reload(true);}
 	});
 	return;
 }
@@ -188,7 +195,8 @@ function debug(){
 		shade: false,
 		maxmin: true, //开启最大化最小化按钮
 		area: ['893px', '600px'],
-		content: 'toDebug?id=${map.id}'
+		content: 'toDebug?id=${map.id}',
+		end:function(){location.reload(true);}
 	});
 	return;
 }
@@ -210,7 +218,13 @@ window.onload=function(){
 					  return;
 				  }
 				  for(var i=0;i<list.length;i++){
-						$("#comment").append("<div class='layui-field-box'><fieldset class='layui-elem-field' style='width: 800px;'><legend>用户："+list[i].user+"</legend><div class='layui-field-box' >"+list[i].value+"</div>");
+						$("#comment").append("<div class='layui-field-box'><fieldset class='layui-elem-field' style='width: 800px;'><legend>用户："+list[i].user+
+						"<span id='tag1' class='layui-badge layui-bg-orange'>"+list[i].cpu+"</span>"
+						+"<span id='tag2' class='layui-badge layui-bg-orange'>"+list[i].memory+"</span>"
+						+"<span id='tag2' class='layui-badge layui-bg-orange'>"+list[i].HD+"</span>"
+						+"<span id='tag2' class='layui-badge layui-bg-orange'>"+list[i].gd+"</span>"
+						+"<span id='tag2' class='layui-badge layui-bg-orange'>"+list[i].sys+"</span>"
+						+"</legend><div class='layui-field-box' >"+list[i].value+"</div>");
 					}
 			  }
 			  

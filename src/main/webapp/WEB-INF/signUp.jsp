@@ -48,12 +48,18 @@
 				return false;
 			}else{
 				layer.msg("注册成功",function(){
-					layer.closeAll();
+					
 				});
-
+					var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+					parent.layer.close(index); //再执行关闭        
 				return true;
 			}
 			
+		}
+		function return1(){
+			var index = parent.layer.getFrameIndex(window.name);
+			var t = setTimeout("parent.layer.close(parent.layer.getFrameIndex(window.name))", 2000);
+			return 
 		}
   	</script>
 
@@ -121,7 +127,7 @@
   			<div class="layui-form-item">
     			<div class="layui-input-block">
      				<button class="layui-btn" lay-submit lay-filter="form">立即提交</button>
-     				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+     				<button type="reset" class="layui-btn layui-btn-primary" onclick="return1()">重置</button>
     			</div>
   			</div>
 		</form>

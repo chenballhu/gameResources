@@ -21,6 +21,9 @@
 	<select id="showRank" parameterType="Object" resultType="Map">
 		select id,cn,hot from list_rank order by hot DESC limit 10
 	</select>
+	<update id="upRank" parameterType="Object" >
+        update list_rank set hot=#{hot} where id=#{id}
+      </update>
 	<select id="showGame" parameterType="Object" resultType="Map">
 		select * from list_rank where id=#{id}
 	</select>
@@ -31,7 +34,7 @@
 		</where>
 	</select>
 	<select id="showComment" parameterType="Object" resultType="Map">
-		select user,value from comment
+		select * from comment
 		<where>
 			`id` = #{id}
 		</where>

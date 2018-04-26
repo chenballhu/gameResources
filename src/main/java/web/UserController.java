@@ -48,7 +48,7 @@ public class UserController {
 		return null;
 	}
 	
-	@RequestMapping("/toLogin")
+	@RequestMapping("/index")
 	public String toLogin() throws IOException{
 		
 		return "index";
@@ -62,6 +62,7 @@ public class UserController {
 		
 	}
 	//注册
+	@ResponseBody
 	@RequestMapping("/signUp")
 	public Object signUp(String userName,String password,boolean permission,String sex,boolean adult,String like) throws IOException{
 		try{
@@ -90,6 +91,7 @@ public class UserController {
 		return new JsonResult(0,"","注册成功");
 	}
 	
+	
 	//排行榜
 	@ResponseBody
 	@RequestMapping(value="/rank")
@@ -116,9 +118,11 @@ public class UserController {
 	}
 	//游戏内页
 	@RequestMapping(value="/game")
-	public Object showGame(String id,HttpServletRequest req){
-		Map<String,String> map = new HashMap<String,String>();
+	public Object showGame(int id,HttpServletRequest req){
+		Map map = new HashMap<String,String>();
 		map = userDao.showGame(id);
+		int hot = (Integer) map.get("hot")+1;
+		userDao.upRank(hot, id);
 		req.setAttribute("map", map);
 		return "game";
 		

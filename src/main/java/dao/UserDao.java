@@ -16,10 +16,12 @@ public interface UserDao {
 	User findUserByName(String name);
 	//排行榜
 	List<String> showRank();
+	//排行榜上升
+	void upRank(@Param("hot")int hot,@Param("id")int id);
 	//推荐
 	List<String> recommend(@Param("like")String like);
 	//游戏内页
-	Map<String,String> showGame(String id);
+	Map<Object,String> showGame(int id);
 	//搜索
 	List<String> search1(@Param("str")String str);
 	//显示评论

@@ -274,16 +274,13 @@ function login(){
 			  document.cookie="like="+data.data.like+";expires="+date.toGMTString();
 			  //document.cookie="password="+data.data.password+";expires="+date.toGMTString();
 			  //location.reload(ture);
-			  //获取推荐
+			  
 			 
 			  
 		  },
 		  dataType: "json"
 		});
 	
-	 
-	
-	return;
 }
 
 //注销登陆
@@ -306,10 +303,11 @@ function signOut(){
 //注册
 function signUp1(){
 	layer.open({
+		id: 1,
 		type: 2,
 		title: '注册',
-		shadeClose: true,
-		shade: false,
+		shadeClose: false,
+		shade: 0.3,
 		maxmin: true, //开启最大化最小化按钮
 		area: ['893px', '600px'],
 		content: 'toSignUp'
@@ -319,11 +317,44 @@ function signUp1(){
 
 //游戏内页
 function list(id){
+	var temp = document.cookie.split(";");
+	var name = "";
+	for(var i=0;i<temp.length;i++){
+		if("user"==temp[i].split("=")[0]){
+			name = temp[i].split("=")[1];
+		}
+	}
+	if(name==""){
+		layer.msg("请先登陆");
+		return;
+	}
+	var temp = document.cookie.split(";");
+	var name = "";
+	for(var i=0;i<temp.length;i++){
+		if("user"==temp[i].split("=")[0]){
+			name = temp[i].split("=")[1];
+		}
+	}
+	if(name==""){
+		layer.msg("请先登陆");
+		return;
+	}
 	window.location.href='game?id='+id
 }
 
 //搜索功能
 function search1(){
+	var temp = document.cookie.split(";");
+	var name = "";
+	for(var i=0;i<temp.length;i++){
+		if("user"==temp[i].split("=")[0]){
+			name = temp[i].split("=")[1];
+		}
+	}
+	if(name==""){
+		layer.msg("请先登陆");
+		return;
+	}
 		var a = document.getElementById('input').value;
 		if(a==""){
 			window.location.href="list";

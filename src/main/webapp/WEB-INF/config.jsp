@@ -50,7 +50,7 @@
 <body class="layui-layout-body" style="background-color: #eeeeee">
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header">
-    <div class="layui-logo"><a href="../toLogin">yanhan</a></div>
+    <div class="layui-logo"><a href="../index">yanhan</a></div>
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
     
@@ -139,43 +139,23 @@ window.onload=function(){
 }
 //禁言
 function setPermission1(id){
-	layer.confirm('是否禁言', {icon: 3, title:'禁言'}, function(index){
-		$.ajax({
-			  type: 'GET',
-			  data:{'id':id},
-			  url: "setPermission1",
-			  success: function(data){
-				if(data.state==1){
-					console.log("获取用户失败");
-				}
-				var user = data.data;
-				
-				
-			  },
-			  dataType: "json"
-			});
-		  layer.msg("成功禁言");
-		});    
-}
+	layer.confirm('是否禁言', {icon: 3, title:'禁言',  yes: function(index, layero){
+		s1(id);
+		layer.msg("成功禁言");
+		
+		},end:function(){
+			setTimeout("location.reload(true)", 1000);
+			
+		}})
+	}
 //解除禁言
 function setPermission2(id){
-	layer.confirm('是否解除禁言', {icon: 3, title:'禁言'}, function(index){
-		$.ajax({
-			  type: 'GET',
-			  data:{'id':id},
-			  url: "setPermission2",
-			  success: function(data){
-				if(data.state==1){
-					console.log("获取用户失败");
-				}
-				var user = data.data;
-				
-				
-			  },
-			  dataType: "json"
-			});
-		  layer.msg("成功解除禁言");
-		});    
+	layer.confirm('是否解除禁言', {icon: 3, title:'禁言',end:function(){
+		setTimeout("location.reload(true)", 1000);
+	}}, function(index){
+		s2(id);
+		layer.msg("成功解除禁言");
+	});    
 }
 //检索用户
 function findUserByName(){
@@ -226,8 +206,39 @@ function findUserByName(){
 		  dataType: "json"
 		});
 }
-//删除评论
-
+function s1(id){
+	$.ajax({
+		  type: 'GET',
+		  data:{'id':id},
+		  url: "setPermission1",
+		  success: function(data){
+			if(data.state==1){
+				console.log("获取用户失败");
+			}
+			var user = data.data;
+			
+			
+		  },
+		  dataType: "json"
+		});
+}
+function s2(id){
+	$.ajax({
+		  type: 'GET',
+		  data:{'id':id},
+		  url: "setPermission2",
+		  success: function(data){
+			if(data.state==1){
+				console.log("获取用户失败");
+			}
+			var user = data.data;
+			
+			
+		  },
+		  dataType: "json"
+		});
+	   
+}
 </script>
 </body>
 </html>
