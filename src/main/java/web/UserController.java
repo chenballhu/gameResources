@@ -130,11 +130,11 @@ public class UserController {
 	
 	//索引页
 	@RequestMapping("/list")
-	public Object showList(String str,HttpServletRequest req) throws ServletException, IOException{
+	public Object showList(String str,Integer type,HttpServletRequest req) throws ServletException, IOException{
 		
 		try{
-			List list = userDao.search1(str);
-			req.setAttribute("search", list);
+			req.setAttribute("str", str);
+			req.setAttribute("type", type);
 			return "list";
 		}catch(RuntimeErrorException e){
 			return new JsonResult(0,e);
@@ -145,16 +145,28 @@ public class UserController {
 	//搜索
 	@ResponseBody
 	@RequestMapping("/search")
-	public Object search(String str,HttpServletRequest req){
+	public Object search(String str,Integer type,HttpServletRequest req){
 		try{
-			List list = userDao.search1(str);
+			List list = userDao.search1(str,type);
 			req.setAttribute("list", list);
 			return new JsonResult(list);
 		}catch(RuntimeErrorException e){
 			return new JsonResult(0,e);
 		}
 	}
-	
+	//按首字母索引
+	@ResponseBody
+	@RequestMapping("/search2")
+	public Object search2(String str1,HttpServletRequest req){
+		try{
+			List list = userDao.search2(str1);
+			req.setAttribute("list1", list);
+			return new JsonResult(list);
+		}catch(RuntimeErrorException e){
+			return new JsonResult(0,e);
+		}
+		
+	}
 	//显示评论
 	@ResponseBody
 	@RequestMapping("/showComment")

@@ -40,7 +40,7 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>test</title>
+  <title>游戏内页</title>
   <link rel="stylesheet" href="layui/css/layui.css">
 	<script src="layui/layui.all.js"></script>
 	<script src="layui/jquery-3.3.1.min.js"></script>
@@ -57,7 +57,7 @@
     
     
     	<li class="layui-nav-item">
-        <a href="javascript:history.back(-1)">
+        <a href="index">
         <i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe68e;</i>  
         	首页
         </a>       

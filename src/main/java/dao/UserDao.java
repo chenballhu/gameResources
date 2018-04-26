@@ -23,11 +23,12 @@ public interface UserDao {
 	//游戏内页
 	Map<Object,String> showGame(int id);
 	//搜索
-	List<String> search1(@Param("str")String str);
+	List<String> search1(@Param("str")String str, @Param("type")Integer type);
 	//显示评论
 	List showComment(@Param("id")int id);
 	//发送评论
 	void comment(@Param("id")int id,@Param("user")String user,@Param("value")String value,@Param("cpu")String cpu,
 			@Param("memory")String memory,@Param("HD")String HD,
 				@Param("gd")String gd,@Param("sys")String sys);
+	List search2(@Param("str1")String str1);
 }

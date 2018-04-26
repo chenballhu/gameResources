@@ -37,6 +37,33 @@
 		#exit{								
 			font-size: 20px;			
 		}
+		img{  
+			position:absolute;
+        	width: auto;  
+			height: auto;  
+			max-width: 600px;       
+		}  
+		#seleteBox{
+			border: none;
+			position:absolute;z-index: 4;
+			top:12px;left:380px;
+		}
+		#dropdown-content {
+    		display: none;
+    		float:left;
+   			position: absolute;
+    		
+		}
+		#dropdown-content a {
+    		color: black;
+    		
+    		text-decoration: none;
+    		display: block;
+		}
+		#seleteBox a:hover {background-color: #f1f1f1}
+		#seleteBox:hover #dropdown-content {
+    		display: block;
+		}
 </style>
 	
   <meta charset="utf-8">
@@ -84,7 +111,16 @@
     <!-- 搜索栏 -->
      <div id="top_input" class="lf">
         <input id="input" type="text" placeholder="请输入您要搜索的内容" style="width:360px; height: 30px;"/>
-        <a class="layui-btn layui-btn-radius layui-icon" onclick="search1()">&#xe615;&nbsp;&nbsp;搜索</a>
+        <div id="seleteBox">
+        	<a class="layui-btn layui-btn-radius layui-icon" onclick="search1('0')">&#xe615;&nbsp;&nbsp;全站搜索</a>
+        	<div id="dropdown-content">
+        		<a class="layui-btn layui-btn-radius layui-icon" onclick="search1('1')">&#xe615;&nbsp;&nbsp;仅NGC</a>
+        		<a class="layui-btn layui-btn-radius layui-icon" onclick="search1('2')">&#xe615;&nbsp;&nbsp;仅PC</a>
+        		<a class="layui-btn layui-btn-radius layui-icon" onclick="search1('3')">&#xe615;&nbsp;&nbsp;仅Wii</a>
+        	</div>
+        </div>
+        
+        
         
     </div>
  	
@@ -102,7 +138,7 @@
 				<form action="login" style="margin-left: 30px">
 					<input id="inputName" type="text" placeholder="请输入用户名" name="name" style="width:180px; height: 30px;"/><p>
 					<div style="margin-top: 20px;"></div>
-					<input id="inputPassword" type="text" placeholder="请输入密码" name="password" style="width:180px; height: 30px;"/>
+					<input id="inputPassword" type="password" placeholder="请输入密码" name="password" style="width:180px; height: 30px;"/>
 					<div style="margin-top: 40px;"></div>
 					<input type="button" value="登录" id="login1"	class="layui-btn layui-btn-radius layui-btn-normal" onclick="login()">
 					<input type="button" value="注册" id="signUp"	class="layui-btn layui-btn-radius layui-btn-normal" onclick="signUp1()">
@@ -134,9 +170,10 @@
  
   
   <!-- 轮播图1 -->
+  NGC
  <div class="layui-carousel" id="test1">
- 	<div>NGC</div>
-  <div carousel-item>
+
+  <div carousel-item style="margin-left: 20%">
   <c:forEach var="i" begin="1" end="9">
   	<img src="pictures/NGC/${i}/${i}.jpg" onclick="list(${i})">
   	</c:forEach>
@@ -144,22 +181,22 @@
 </div>
 
 <!-- 轮播图2 -->
-<div style="margin-top: 20px;">
+  PC
  <div class="layui-carousel" id="test2">
- 	<div>PC</div>
-  <div carousel-item>
+ 	
+  <div carousel-item style="margin-left: 20%;">
     <c:forEach var="i" begin="112" end="121">
   	<img src="pictures/PC/${i}/${i}.jpg" onclick="list(${i})">
   	</c:forEach>
   </div>
 </div>
-</div> 
+ 
 
 <!-- 轮播图3 -->
-<div style="margin-top: 20px;">
+ Wii
  <div class="layui-carousel" id="test3">
- 	<div>Wii</div>
-  <div carousel-item>
+ 	
+  <div carousel-item style="margin-left: 20%">
     <c:forEach var="i" begin="317" end="326">
   	<img src="pictures/Wii/${i}/${i}.jpg" onclick="list(${i})">
   	</c:forEach>
@@ -174,7 +211,6 @@
 	
 
 
-	</div>
 </div>
 
 
@@ -230,7 +266,7 @@ window.onload=function(){
 					  }
 					  $("#info").append("<div style='margin-top: 30px'>今日推荐</div>");
 					  var cn = data2.data;
-					  console.log(cn);
+
 					  for(var i=0;i<cn.length;i++){
 						  $("#info").append("<div><a href='game?id="+cn[i].id+"'>"+cn[i].cn+"</a></div>");
 					  }
@@ -273,7 +309,7 @@ function login(){
 			  document.cookie="user="+data.data.name+";expires="+date.toGMTString();
 			  document.cookie="like="+data.data.like+";expires="+date.toGMTString();
 			  //document.cookie="password="+data.data.password+";expires="+date.toGMTString();
-			  //location.reload(ture);
+			  location.ref="index";
 			  
 			 
 			  
@@ -317,33 +353,12 @@ function signUp1(){
 
 //游戏内页
 function list(id){
-	var temp = document.cookie.split(";");
-	var name = "";
-	for(var i=0;i<temp.length;i++){
-		if("user"==temp[i].split("=")[0]){
-			name = temp[i].split("=")[1];
-		}
-	}
-	if(name==""){
-		layer.msg("请先登陆");
-		return;
-	}
-	var temp = document.cookie.split(";");
-	var name = "";
-	for(var i=0;i<temp.length;i++){
-		if("user"==temp[i].split("=")[0]){
-			name = temp[i].split("=")[1];
-		}
-	}
-	if(name==""){
-		layer.msg("请先登陆");
-		return;
-	}
+	
 	window.location.href='game?id='+id
 }
 
 //搜索功能
-function search1(){
+function search1(type){
 	var temp = document.cookie.split(";");
 	var name = "";
 	for(var i=0;i<temp.length;i++){
@@ -355,6 +370,8 @@ function search1(){
 		layer.msg("请先登陆");
 		return;
 	}
+	
+	
 		var a = document.getElementById('input').value;
 		if(a==""){
 			window.location.href="list";
@@ -363,13 +380,13 @@ function search1(){
 				  type: 'GET',
 				  url: "search",
 				  contentType:"application/UTF-8",
-				  data:{str:a},
+				  data:{'str':a,'type':type},
 				  success: function(data){
 					  if(data.state==1){
 						  layer.msg(data.message);
 						  return;
 					  }else{
-						  location.href="list?str="+a;
+						  location.href="list?str="+a+"&type="+type;
 					  }
 					  
 				  },
@@ -387,7 +404,15 @@ layui.use('element', function(){
   
 });
 
-
+layui.use('form', function(){
+	  var form = layui.form;
+	  
+	  //监听提交
+	  form.on('submit(formDemo)', function(data){
+	    layer.msg(JSON.stringify(data.field));
+	    return false;
+	  });
+	});
 
 
 layui.use('carousel', function(){

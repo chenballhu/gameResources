@@ -30,8 +30,33 @@
 	<select id="search1" parameterType="Object" resultType="Map">
 		select * from list_rank
 		<where>
-			`cn` like '%${str}%'
+			<if test="0 == type">
+				`cn` like '%${str}%' or
+				(`en` like '%${str}%') 
+				order by hot DESC
+			</if>
+			<if test="1 == type">
+				`station`='NGC' and
+				(`cn` like '%${str}%' or
+				`en` like '%${str}%')
+				order by hot DESC
+			</if>
+			<if test="2 == type">
+				`station`='PC' and
+				(`cn` like '%${str}%' or
+				`en` like '%${str}%')
+				order by hot DESC
+			</if>
+			<if test="3 == type">
+				`station`='Wii' and
+				(`cn` like '%${str}%' or
+				`en` like '%${str}%')
+				order by hot DESC
+			</if>
 		</where>
+	</select>
+	<select id="search2" parameterType="Object" resultType="Map">
+		select * from list_rank where `fn`=upper('${str1}')
 	</select>
 	<select id="showComment" parameterType="Object" resultType="Map">
 		select * from comment

@@ -73,8 +73,8 @@ ClassPathXmlApplicationContext ctx;
 	public void game() throws SQLException{
 		UserDao dao = ctx.getBean("userDao",UserDao.class);
 		
-		Map<String,String> map = new HashMap();
-		map = dao. showGame("1");
+		Map map = new HashMap();
+		map = dao. showGame(1);
 		System.out.println(map);
 	}
 	
@@ -83,7 +83,7 @@ ClassPathXmlApplicationContext ctx;
 		UserDao dao = ctx.getBean("userDao",UserDao.class);
 		String str = "最";
 		Map<String,String> map = new HashMap();
-		List list = dao. search1(str);
+		List list = dao. search1(str,2);
 		System.out.println(list);
 	}
 	
