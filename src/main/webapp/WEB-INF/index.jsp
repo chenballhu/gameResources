@@ -395,6 +395,7 @@ function search1(type){
 		}
 		
 	}
+//进入管理员界面
 
 
 
