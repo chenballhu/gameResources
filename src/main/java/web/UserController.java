@@ -75,7 +75,6 @@ public class UserController {
 			if(user!=null && !user.getName().equals("")){
 				return new JsonResult(1,user,"用户名重复");
 			}
-			System.out.println(user);
 			userDao.createUser(userName, password, permission, sex, adult, like);
 			return new JsonResult(0,"",userName+"注册成功！！");
 		}catch(SQLException e){
@@ -99,7 +98,6 @@ public class UserController {
 	@RequestMapping("/checkUser")
 	public Object checkUser(String userName){
 		User user = userDao.findUserByName(userName);
-		System.out.println(user);
 		return new JsonResult(user);
 	}
 	
