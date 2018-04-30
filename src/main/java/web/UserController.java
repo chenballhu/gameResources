@@ -222,7 +222,7 @@ public class UserController {
 		req.setAttribute("id", id);
 		return "debug";
 	}
-	//图片上传
+	//图片上传+勘误评论
 	 @RequestMapping(value="/upload",method=RequestMethod.POST)  
 	 @ResponseBody  
 	    public Object upload(int id,String value,MultipartFile file,HttpServletRequest req) throws IOException{ 
@@ -242,11 +242,5 @@ public class UserController {
 	        userDao.debug(id, value, url);
 	        return new JsonResult("ok");  
 	    }
-	 //勘误评论
-	 @RequestMapping("/debug")
-	 @ResponseBody
-	 public Object debug(int gameId,String value){
-		 
-		 return null;
-	 }
+
 }
