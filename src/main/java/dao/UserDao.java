@@ -30,5 +30,10 @@ public interface UserDao {
 	void comment(@Param("id")int id,@Param("user")String user,@Param("value")String value,@Param("cpu")String cpu,
 			@Param("memory")String memory,@Param("HD")String HD,
 				@Param("gd")String gd,@Param("sys")String sys);
+	//按字母检索
 	List search2(@Param("str1")String str1);
+	//查找勘误序列
+	int findDebugId();
+	//勘误
+	void debug(@Param("game_id")int id,@Param("value")String value,@Param("url")String url);
 }

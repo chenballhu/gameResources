@@ -1,5 +1,6 @@
 package web;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,8 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import dao.UserDao;
 import entity.User;
@@ -90,7 +94,13 @@ public class UserController {
 		}
 		return new JsonResult(0,"","注册成功");
 	}
-	
+	//检查用户权限
+	@ResponseBody
+	@RequestMapping("/checkUser")
+	public Object checkUser(String userName){
+		User user = userDao.findUserByName(userName);
+		return new JsonResult(user);
+	}
 	
 	//排行榜
 	@ResponseBody
@@ -211,4 +221,31 @@ public class UserController {
 		req.setAttribute("id", id);
 		return "debug";
 	}
+	//图片上传
+	 @RequestMapping(value="/upload",method=RequestMethod.POST)  
+	 @ResponseBody  
+	    public Object upload(int id,String value,MultipartFile file,HttpServletRequest req) throws IOException{ 
+		 	String path = "";
+		 	
+	        //path = req.getSession().getServletContext().getRealPath("upload");
+	        path = "C:/Users/何英强/workspace/gameResources/src/main/webapp/pictures/upload";
+	        int suq = userDao.findDebugId()+1;
+	        String fileName = suq+".jpg";
+	        String url = "pictures/upload/"+suq+".jpg";
+	        File dir = new File(path,fileName);          
+	        if(!dir.exists()){  
+	            dir.mkdirs();  
+	        }  
+	        //MultipartFile自带的解析方法  
+	        file.transferTo(dir);  
+	        userDao.debug(id, value, url);
+	        return new JsonResult("ok");  
+	    }
+	 //勘误评论
+	 @RequestMapping("/debug")
+	 @ResponseBody
+	 public Object debug(int gameId,String value){
+		 
+		 return null;
+	 }
 }

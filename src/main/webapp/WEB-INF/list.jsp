@@ -42,6 +42,9 @@
         #index a{
         font-size: 50px;
         }
+        a{
+        cursor:pointer
+        }
         /*#l1l{
             width:200px;height:200px;
             background-color: #2F4056;
@@ -126,7 +129,7 @@
 			<a>A</a>&nbsp;&nbsp;<a>B</a>&nbsp;&nbsp;<a>C</a>&nbsp;&nbsp;<a>D</a>&nbsp;&nbsp;<a>E</a>&nbsp;&nbsp;<a>F</a>&nbsp;&nbsp;<a>G</a>&nbsp;&nbsp;
 			<a>H</a>&nbsp;&nbsp;<a>I</a>&nbsp;&nbsp;<a>J</a>&nbsp;&nbsp;<a>K</a>&nbsp;&nbsp;<a>L</a>&nbsp;&nbsp;<a>N</a>&nbsp;&nbsp;<a>M</a>&nbsp;&nbsp;
 			<a>O</a>&nbsp;&nbsp;<a>P</a>&nbsp;&nbsp;<a>Q</a>&nbsp;&nbsp;<a>R</a>&nbsp;&nbsp;<a>S</a>&nbsp;&nbsp;<a>T</a>&nbsp;&nbsp;<a>U</a>&nbsp;&nbsp;
-			<a>V</a>&nbsp;&nbsp;<a>W</a>&nbsp;&nbsp;<a>X</a>&nbsp;&nbsp;<a>Y</a>&nbsp;&nbsp;<a>Z</a>
+			<a>V</a>&nbsp;&nbsp;<a>W</a>&nbsp;&nbsp;<a>X</a>&nbsp;&nbsp;<a>Y</a>&nbsp;&nbsp;<a>Z</a>&nbsp;&nbsp;<a>#</a>
 		</div>
 		
 	</div>
@@ -260,7 +263,7 @@ window.onload=function(){
 					        var limit = obj.limit; //得到每页显示的条数
 					        for(var i=(curr-1)*limit;i<((curr-1)*limit+limit);i++){
 					        	
-					        	$("#game-list").prepend('<div class="list-item"><div class="list-item-name"><img src="pictures/icon/' +list[0].station + '.jpg">'
+					        	$("#game-list").prepend('<div class="list-item"><div class="list-item-name"><img src="pictures/icon/' +list[i].station + '.jpg">'
 					        			+ '</div><div class="list-item-content" onclick="toGame('+list[i].id+')">中文名：' + list[i].cn + '<br>' + '英文名：' + list[i].en + '<br>' 
 					        			+ '游戏类型：' + list[i].kind + '<br>' + '出版商：' + list[i].company + '<br>' + '游戏人数：' + list[i].player + '</div></div>');
 					        	if(i==list.length-1){
@@ -325,7 +328,7 @@ function toGame(id){
 					        var limit = obj.limit; 
 					        for(var i=(curr-1)*limit;i<((curr-1)*limit+limit);i++){
 					        	
-					        	$("#game-list").prepend('<div class="list-item"><div class="list-item-name"><img src="pictures/icon/' +list[0].station + '.jpg">'
+					        	$("#game-list").prepend('<div class="list-item"><div class="list-item-name"><img src="pictures/icon/' +list[i].station + '.jpg">'
 					        			+ '</div><div class="list-item-content" onclick="toGame('+list[i].id+')">中文名：' + list[i].cn + '<br>' + '英文名：' + list[i].en + '<br>' 
 					        			+ '游戏类型：' + list[i].kind + '<br>' + '出版商：' + list[i].company + '<br>' + '游戏人数：' + list[i].player + '</div></div>');
 					        	if(i==list.length-1){

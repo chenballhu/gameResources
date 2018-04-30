@@ -161,18 +161,37 @@ function comment(){
 		layer.msg("请先登陆");
 		return;
 	}
-	
-	layer.open({
-		type: 2,
-		title: '评论',
-		shadeClose: true,
-		shade: false,
-		maxmin: true, //开启最大化最小化按钮
-		area: ['893px', '600px'],
-		content: 'toComment?id=${map.id}',
-		end:function(){location.reload(true);}
+	$.ajax({
+		  type: 'GET',
+		  url: "checkUser",
+		  contentType:"application/UTF-8",
+		  data:{userName:name},
+		  success: function(data){
+			  if(data.state==1){
+				  layer.msg(data.message);
+				  return;
+			  }else{
+				  var user = data.data;
+				  if(user.permiss==0){
+					  layer.open({
+							type: 2,
+							title: '评论',
+							shadeClose: true,
+							shade: false,
+							maxmin: true, //开启最大化最小化按钮
+							area: ['893px', '600px'],
+							content: 'toComment?id=${map.id}',
+							end:function(){location.reload(true);}
+						});
+						
+				  }else{
+					  layer.msg("你已被禁言");
+					  return;
+				  }
+			  }
+		  }
 	});
-	return;
+	
 }
 //勘误
 function debug(){

@@ -61,11 +61,12 @@
         	用户管理
         </a>       
       </li>
-      
-      
       <li class="layui-nav-item"><a href="del">
       <i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe640;</i>
       	评论管理</a></li>
+      	<li class="layui-nav-item"><a href="bug">
+      <i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe640;</i>
+      	勘误</a></li>
       <li class="layui-nav-item"><a href="">
       	<i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe641;</i>
     	技术文档</a></li>
@@ -83,7 +84,7 @@
    	 	<div class="d1" id="d1">
    	 		<div id="top_input" class="lf" style="margin-top: 20px;margin-left: 280px;">
         		<input id="inputName" type="text" placeholder="请输入您要搜索的游戏" style="width:360px; height: 30px;"/>
-        		<a class="layui-btn layui-btn-radius layui-icon" onclick="findUserByName()">&#xe615;&nbsp;&nbsp;搜索</a>
+        		<a class="layui-btn layui-btn-radius layui-icon" onclick="findGameByName()">&#xe615;&nbsp;&nbsp;搜索</a>
         	</div>
    	 		<table class="layui-table">
   <colgroup>
@@ -125,7 +126,6 @@ window.onload=function(){
 				console.log("获取游戏失败");
 			}
 			var game = data.data;
-			console.log(game);
 			for(var i=0;i<game.length;i++){
 				$("tbody").append("<tr><td>"+game[i].cn+"</td><td>"+game[i].value+"</td><td><a onclick=del("+game[i].id+")>删除</a></td></tr>");
 			}
@@ -154,7 +154,28 @@ function del(id){
 		}); 
 	//location.reload(true);
 }
-
+//检索游戏
+function findGameByName(){
+	$("tbody").remove();
+	$("table").append("<tbody></tbody>");
+	var gameName = $('#inputName').val();
+	$.ajax({
+		  type: 'GET',
+		  data:{'name':gameName},
+		  url: "findGameByName",
+		  success: function(data){
+			if(data.state==1){
+				console.log("获取游戏失败");
+			}
+			var game = data.data;
+			console.log(game);
+			for(var i=0;i<game.length;i++){
+				$("tbody").append("<tr><td>"+game[i].cn+"</td><td>"+game[i].value+"</td><td><a onclick=del("+game[i].id+")>删除</a></td></tr>");
+			}
+		  },
+		  dataType: "json"
+		});
+}
 </script>
 </body>
 </html>

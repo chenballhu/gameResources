@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import dao.AdminDao;
 import dao.UserDao;
 import entity.User;
 
@@ -94,5 +95,19 @@ ClassPathXmlApplicationContext ctx;
 		Map<String,String> map = new HashMap();
 		List list = dao. showComment(1);
 		System.out.println(list);
+	}
+	@Test
+	public void findDebugId() throws SQLException{
+		UserDao dao = ctx.getBean("userDao",UserDao.class);
+		int i = dao.findDebugId();
+		
+		System.out.println(i);
+	}
+	@Test
+	public void showAllBug() throws SQLException{
+		AdminDao dao = ctx.getBean("adminDao",AdminDao.class);
+		List i = dao.showAllBug();
+		
+		System.out.println(i);
 	}
 }

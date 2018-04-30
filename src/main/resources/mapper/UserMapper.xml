@@ -67,4 +67,11 @@
 	<insert id="comment" parameterType="Object">
 		insert into comment(id,user,value,cpu,memory,HD,gd,sys)values(#{id},#{user},#{value},#{cpu},#{memory},#{HD},#{gd},#{sys})
 	</insert>
+	<select id="findDebugId" parameterType="Object" resultType="int">
+		select count('id') from upload;
+	</select>
+	<insert id="debug" parameterType="Object">
+		insert into upload(game_id,value,url)values(#{game_id},#{value},#{url})
+	</insert>
+	
 </mapper>

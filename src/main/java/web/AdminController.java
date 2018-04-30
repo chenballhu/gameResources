@@ -32,6 +32,20 @@ public class AdminController {
 	public Object toDel(){
 		return "del";
 	}
+	@RequestMapping("/bug")
+	public Object toBug(){
+		return "bug";
+	}
+	//登陆
+	@RequestMapping("/login")
+	@ResponseBody
+	public Object login(String password){
+		List list = adminDao.login(password);
+		if(list.size()==0){
+			return new JsonResult(1,"","指令错误");
+		}
+		return new JsonResult(0,"admin/config","登陆成功");
+	}
 	//检索所有用户
 	@RequestMapping("/findAllUser")
 	@ResponseBody
@@ -68,11 +82,37 @@ public class AdminController {
 			List list = adminDao.findAllGame();
 			return new JsonResult(list);
 		}
+	
+	//检索指定游戏
+		@RequestMapping("/findGameByName")
+		@ResponseBody
+		public Object findGameByName(String name){
+			List list = adminDao.findGameByName(name);
+			return new JsonResult(list);
+		}
 	//删除评论
 		@RequestMapping("/delComment")
 		@ResponseBody
 		public Object delComment(int id){
 			adminDao.delComment(id);
 			return new JsonResult(0,"","删除成功");
+		}
+	//检索所有勘误
+		@RequestMapping("/showBug")
+		@ResponseBody
+		public Object showBug(){
+			List list = adminDao.showAllBug();
+			if(list.size()==0){
+				return new JsonResult(1,"","没有查询到数据");
+			}
+			return new JsonResult(list);
+		}
+	//删除勘误
+		@RequestMapping("/deleteBug")
+		@ResponseBody
+		public Object deleteBug(int id){
+			adminDao.deleteBug(id);
+			
+			return new JsonResult(0,"","成功删除");
 		}
 }

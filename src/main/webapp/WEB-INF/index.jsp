@@ -64,6 +64,9 @@
 		#seleteBox:hover #dropdown-content {
     		display: block;
 		}
+		a{
+		cursor:pointer
+		}
 </style>
 	
   <meta charset="utf-8">
@@ -77,23 +80,23 @@
 <body class="layui-layout-body" style="background-color: #eeeeee">
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header">
-    <div class="layui-logo"><a href="admin/config">yanhan</a></div>
+    <div class="layui-logo"><a onclick="toAdmin()">yanhan</a></div>
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
     
     
     	<li class="layui-nav-item">
-        <a href="toLogin">
+        <a href="index">
         <i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe68e;</i>  
         	首页
         </a>       
       </li>
       
       
-      <li class="layui-nav-item"><a href="list">
+      <li class="layui-nav-item"><a onclick="toList()">
       <i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe705;</i>
       	档案</a></li>
-      <li class="layui-nav-item"><a href="">
+      <li class="layui-nav-item"><a onclick="toSup()">
       	<i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe641;</i>
     	技术文档</a></li>
       
@@ -217,7 +220,65 @@
 
 <script>
 //JavaScript代码区域
-
+//管理员登陆
+function toAdmin(){
+	layer.prompt({
+		  formType: 1,
+		  value: '',
+		  title: '管理员登陆'
+		}, function(value, index, elem){
+			$.ajax({
+				  type: 'GET',
+				  url: "admin/login",
+				  data:{password:value},
+				  success: function(data){
+					  if(data.state==1){
+							layer.msg(data.message);
+							return;
+						}
+					var url = data.data;
+					location.href=url;
+				  },
+				  error:function(){
+					console.log("未知错误");
+				  },
+				  dataType: "json"
+				});
+		  
+		});
+}
+//检查登陆状态
+function check(){
+	var temp = document.cookie.split(";");
+	var name = "";
+	for(var i=0;i<temp.length;i++){
+		if("user"==temp[i].split("=")[0]){
+			name = temp[i].split("=")[1];
+		}
+	}
+	if(name==""){
+		layer.msg("请先登陆");
+		return false;
+	}else{
+		return true;
+	}
+}
+//前往检索页
+function toList(){
+	if(check()){
+		location.href="list";
+	}else{
+		layer.msg("请先登陆");
+	}
+}
+//前往技术文档
+function toSup(){
+	if(check()){
+		location.href="";
+	}else{
+		layer.msg("请先登陆");
+	}
+}
 //获取登陆状态
 window.onload=function(){
 			var temp = document.cookie.split(";");
@@ -309,7 +370,7 @@ function login(){
 			  document.cookie="user="+data.data.name+";expires="+date.toGMTString();
 			  document.cookie="like="+data.data.like+";expires="+date.toGMTString();
 			  //document.cookie="password="+data.data.password+";expires="+date.toGMTString();
-			  location.ref="index";
+			  location.reload();
 			  
 			 
 			  

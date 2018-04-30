@@ -66,6 +66,9 @@
       <li class="layui-nav-item"><a href="del">
       <i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe640;</i>
       	评论管理</a></li>
+      	<li class="layui-nav-item"><a href="bug">
+      <i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe640;</i>
+      	勘误</a></li>
       <li class="layui-nav-item"><a href="">
       	<i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe641;</i>
     	技术文档</a></li>
@@ -162,7 +165,7 @@ function findUserByName(){
 	var name =""; 
 	name = document.getElementById('inputName').value;
 	if(name==""){
-		$("tbody").remove();
+		sc
 		$.ajax({
 			  type: 'GET',
 			  url: "findAllUser",
@@ -213,7 +216,7 @@ function s1(id){
 		  url: "setPermission1",
 		  success: function(data){
 			if(data.state==1){
-				console.log("获取用户失败");
+				console.log(data.message);
 			}
 			var user = data.data;
 			
@@ -229,7 +232,7 @@ function s2(id){
 		  url: "setPermission2",
 		  success: function(data){
 			if(data.state==1){
-				console.log("获取用户失败");
+				console.log(data.message);
 			}
 			var user = data.data;
 			
