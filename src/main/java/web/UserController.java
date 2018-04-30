@@ -99,6 +99,7 @@ public class UserController {
 	@RequestMapping("/checkUser")
 	public Object checkUser(String userName){
 		User user = userDao.findUserByName(userName);
+		System.out.println(user);
 		return new JsonResult(user);
 	}
 	

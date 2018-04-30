@@ -172,7 +172,7 @@ function comment(){
 				  return;
 			  }else{
 				  var user = data.data;
-				  if(user.permiss==0){
+				  if(!user.permission){
 					  layer.open({
 							type: 2,
 							title: '评论',
