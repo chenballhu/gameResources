@@ -64,12 +64,12 @@
       </li>
       
       
-      <li class="layui-nav-item"><a href="">
+      <li class="layui-nav-item"><a onclick="toList()">
       <i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe705;</i>
       	档案</a></li>
-      <li class="layui-nav-item"><a href="">
+      <li class="layui-nav-item"><a onclick="toSup()">
       	<i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe641;</i>
-    	技术文档</a></li>
+    	目录</a></li>
       
     </ul>
    

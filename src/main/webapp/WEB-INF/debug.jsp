@@ -19,13 +19,15 @@
 			  var upload = layui.upload;
 			   var gameId= ${id};
 			   var value = $("textarea").val();
+			   var user = document.getElementById("user").value;
 
 			  //执行实例
 			  var uploadInst = upload.render({
 			    elem: '#test1' //绑定元素
 			    ,url: 'upload' //上传接口
 			    ,data: {id:gameId,
-			    	  value:function(){return $('#value').val();}
+			    		userName:function(){return $('#user').val();},
+			    	    value:function(){return $('#value').val();}
 			    		}
 			    ,accept: 'images'
 			    ,auto:false
@@ -76,7 +78,7 @@
 			<!-- 获取游戏id -->
 			<input type="text" name="gameId" value="${id}" style="display:none"/>
 			<!-- 获取用户名 -->
-			<input type="text" id="user" name="user" value="" style="display:none"/>
+			<input type="text" id="user" name="user"  />
 
   			
   			<div class="layui-form-item layui-form-text">

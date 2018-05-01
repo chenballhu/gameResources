@@ -65,6 +65,12 @@ public class UserController {
 		return "signUp";
 		
 	}
+	@RequestMapping("/toShowAll")
+	public String toShowAll() throws IOException{
+		
+		return "showAll";
+		
+	}
 	//注册
 	@ResponseBody
 	@RequestMapping("/signUp")
@@ -210,6 +216,7 @@ public class UserController {
 			}
 			break;
 		}
+		System.out.println(value);
 		userDao.comment(id, user, value, cpu, memory, HD, gd, sys);
 		return "comment";
 	}
@@ -223,7 +230,7 @@ public class UserController {
 	//图片上传+勘误评论
 	 @RequestMapping(value="/upload",method=RequestMethod.POST)  
 	 @ResponseBody  
-	    public Object upload(int id,String value,MultipartFile file,HttpServletRequest req) throws IOException{ 
+	    public Object upload(int id,String userName,String value,MultipartFile file,HttpServletRequest req) throws IOException{ 
 		 	String path = "";
 		 	
 	        //path = req.getSession().getServletContext().getRealPath("upload");
@@ -237,8 +244,14 @@ public class UserController {
 	        }  
 	        //MultipartFile自带的解析方法  
 	        file.transferTo(dir);  
-	        userDao.debug(id, value, url);
+	        userDao.debug(id,userName, value, url);
 	        return new JsonResult("ok");  
 	    }
-
+	 //目录
+	 @ResponseBody
+	@RequestMapping("/showAll")
+	public Object showAll(){
+		List list = userDao.showAll();
+		return new JsonResult(list);
+		}
 }

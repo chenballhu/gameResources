@@ -35,5 +35,7 @@ public interface UserDao {
 	//查找勘误序列
 	int findDebugId();
 	//勘误
-	void debug(@Param("game_id")int id,@Param("value")String value,@Param("url")String url);
+	void debug(@Param("game_id")int id,@Param("userName")String userName,@Param("value")String value,@Param("url")String url);
+	//目录
+	List showAll();
 }

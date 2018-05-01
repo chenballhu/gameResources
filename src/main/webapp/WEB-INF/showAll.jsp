@@ -42,9 +42,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>稀缺游戏周边资源整合与管理平台</title>
-  <link rel="stylesheet" href="../layui/css/layui.css">
-	<script src="../layui/layui.all.js"></script>
-	<script src="../layui/jquery-3.3.1.min.js"></script>
+  <link rel="stylesheet" href="layui/css/layui.css">
+	<script src="layui/layui.all.js"></script>
+	<script src="layui/jquery-3.3.1.min.js"></script>
 	
 </head>
 <body class="layui-layout-body" style="background-color: #eeeeee">
@@ -56,22 +56,18 @@
     
     
     	<li class="layui-nav-item">
-        <a href="config">
-        <i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe69c;</i>  
-        	用户管理
+        <a href="index">
+        <i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe68e;</i>  
+        	首页
         </a>       
       </li>
-      
-      
-      <li class="layui-nav-item"><a href="del">
-      <i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe640;</i>
-      	评论管理</a></li>
-      	<li class="layui-nav-item"><a href="del">
-      <i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe640;</i>
-      	勘误</a></li>
-      <li class="layui-nav-item"><a href="">
+      <li class="layui-nav-item"><a onclick="toList()">
+      <i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe705;</i>
+      	档案</a></li>
+      <li class="layui-nav-item"><a onclick="toShowAll()">
       	<i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe641;</i>
-    	技术文档</a></li>
+    	目录</a></li>
+      
       
     </ul>
    
@@ -84,34 +80,61 @@
     <!-- 内容主体区域 -->
 	<div style="padding: 15px;">
    	 	<div class="d1" id="d1">
-   	 		
    	 		<table class="layui-table">
-  <colgroup>
-    <col width="150">
-    <col width="200">
-    <col>
-  </colgroup>
-  <thead>
-    <tr>
-      <th>游戏名称</th>
-      <th>用户名称</th>
-      <th>内容</th>
-      <th>图片</th>
-      <th>删除</th>
-    </tr> 
-  </thead>
-  <tbody>
+  				<colgroup>
+    				<col width="150">
+    				<col width="200">
+    				<col>
+  				</colgroup>
+  				<thead>
+    				<tr>
+      				<th>游戏ID</th>
+      				<th>游戏名字</th>
+	      			</tr> 
+ 				</thead>
+  				<tbody>
     
-  </tbody>
-</table>
+  				</tbody>
+			</table>
+			<table class="layui-table">
+  				<colgroup>
+    				<col width="150">
+    				<col width="200">
+    				<col>
+  				</colgroup>
+  				<thead>
+    				<tr>
+      				<th>游戏ID</th>
+      				<th>游戏名字</th>
+	      			</tr> 
+ 				</thead>
+  				<tbody>
+    
+  				</tbody>
+			</table>
    	 	</div>
-    	
-	</div>
+    </div>
 </div>
 
 
 
 <script>
+//前往检索页
+function toList(){
+	if(check()){
+		location.href="list";
+	}else{
+		layer.msg("请先登陆");
+	}
+}
+//前往目录
+function toShowAll(){
+	if(check()){
+		location.href="toShowAll";
+	}else{
+		layer.msg("请先登陆");
+	}
+}
 
 layui.use('element', function(){
   var element = layui.element;
@@ -121,44 +144,15 @@ layui.use('element', function(){
 window.onload=function(){
 	$.ajax({
 		  type: 'GET',
-		  url: "showBug",
+		  url: "showAll",
 		  success: function(data){
 			if(data.state==1){
-				console.log(data.message);
-				return;
+				layer.msg("获取游戏失败");
 			}
 			var game = data.data;
 			for(var i=0;i<game.length;i++){
-					$("tbody").append("<tr><td>"+game[i].cn+"</td><td>"+game[i].userName+"</td><td>"+game[i].value+"</td>"+"<td><img src='../"+game[i].url+"'></td>"+"<td><a onclick=del("+game[i].id+")>删除</a></td></tr>");
+				$("tbody").append("<tr><td>"+game[i].id+"</td><td>"+game[i].cn+"</td>");
 			}
-			
-		  },
-		  dataType: "json"
-		});
-}
-//禁言
-function del(id){
-	layer.confirm('是否删除', {icon: 3, title:'删除',  yes: function(index, layero){
-		s1(id);
-		layer.msg("成功删除");
-		
-		},end:function(){
-			setTimeout("location.reload(true)", 1000);
-			
-		}})
-	}
-function s1(id){
-	$.ajax({
-		  type: 'GET',
-		  data:{'id':id},
-		  url: "deleteBug",
-		  success: function(data){
-			if(data.state==1){
-				console.log(data.message);
-				return;
-			}
-			var user = data.data;
-			
 			
 		  },
 		  dataType: "json"

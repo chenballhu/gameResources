@@ -29,7 +29,7 @@
      delete from comment where id=#{id}
     </delete>
     <select id="showAllBug" parameterType="Object" resultType="Map">
-		select u.id id,u.game_id,cn,u.value,url from upload as u,list_rank as l where u.game_id=l.id
+		select u.id id,u.game_id,u.userName,cn,u.value,url from upload as u,list_rank as l where u.game_id=l.id
 	</select>
 	<delete id="deleteBug" parameterType="int">
      delete from upload where id=#{id}

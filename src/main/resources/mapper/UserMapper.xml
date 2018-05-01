@@ -71,7 +71,9 @@
 		select count('id') from upload;
 	</select>
 	<insert id="debug" parameterType="Object">
-		insert into upload(game_id,value,url)values(#{game_id},#{value},#{url})
+		insert into upload(game_id,userName,value,url)values(#{game_id},#{userName},#{value},#{url})
 	</insert>
-	
+	<select id="showAll" parameterType="Object" resultType="Map">
+		select * from list_rank;
+	</select>
 </mapper>
