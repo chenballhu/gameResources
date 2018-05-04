@@ -95,6 +95,7 @@
   <thead>
     <tr>
       <th>游戏名称</th>
+      <th>用户昵称</th>
       <th>评论内容</th>
       <th>删除</th>
     </tr> 
@@ -127,7 +128,7 @@ window.onload=function(){
 			}
 			var game = data.data;
 			for(var i=0;i<game.length;i++){
-				$("tbody").append("<tr><td>"+game[i].cn+"</td><td>"+game[i].value+"</td><td><a onclick=del("+game[i].id+")>删除</a></td></tr>");
+				$("tbody").append("<tr><td>"+game[i].cn+"</td><td>"+game[i].user+"</td><td>"+game[i].value+"</td><td><a onclick=del("+game[i].id+")>删除</a></td></tr>");
 			}
 			
 		  },

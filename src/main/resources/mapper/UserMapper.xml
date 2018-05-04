@@ -74,6 +74,6 @@
 		insert into upload(game_id,userName,value,url)values(#{game_id},#{userName},#{value},#{url})
 	</insert>
 	<select id="showAll" parameterType="Object" resultType="Map">
-		select * from list_rank;
+		select * from list_rank order by `fn` DESC;
 	</select>
 </mapper>

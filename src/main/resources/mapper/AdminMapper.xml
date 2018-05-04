@@ -20,7 +20,7 @@
     </update>
     
     <select id="findAllGame" parameterType="Object" resultType="Map">
-		select c.id,cn,value from comment as c,list_rank as l where c.id=l.id
+		select c.id,c.user,cn,value from comment as c,list_rank as l where c.id=l.id
 	</select>
 	<select id="findGameByName" parameterType="Object" resultType="Map">
 		select c.id,cn,value from comment as c,list_rank as l where c.id=l.id and `cn` like '%${name}%'

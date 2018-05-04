@@ -35,7 +35,9 @@
 		#tag2{
 			margin-left: 10px;
 		}
-		
+		a{
+		cursor:pointer
+		}
 </style>
 
   <meta charset="utf-8">
@@ -67,7 +69,7 @@
       <li class="layui-nav-item"><a onclick="toList()">
       <i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe705;</i>
       	档案</a></li>
-      <li class="layui-nav-item"><a onclick="toSup()">
+      <li class="layui-nav-item"><a onclick="toShowAll()">
       	<i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe641;</i>
     	目录</a></li>
       
@@ -206,18 +208,36 @@ function debug(){
 		layer.msg("请先登陆");
 		return;
 	}
-	
-	layer.open({
-		type: 2,
-		title: '勘误',
-		shadeClose: true,
-		shade: false,
-		maxmin: true, //开启最大化最小化按钮
-		area: ['893px', '600px'],
-		content: 'toDebug?id=${map.id}',
-		end:function(){location.reload(true);}
+	$.ajax({
+		  type: 'GET',
+		  url: "checkUser",
+		  contentType:"application/UTF-8",
+		  data:{userName:name},
+		  success: function(data){
+			  if(data.state==1){
+				  layer.msg(data.message);
+				  return;
+			  }else{
+				  var user = data.data;
+				  if(!user.permission){
+					  layer.open({
+							type: 2,
+							title: '勘误',
+							shadeClose: true,
+							shade: false,
+							maxmin: true, //开启最大化最小化按钮
+							area: ['893px', '600px'],
+							content: 'toDebug?id=${map.id}',
+							end:function(){location.reload(true);}
+						});
+				  }else{
+					  layer.msg("你已被禁言");
+					  return;
+				  }
+			  }
+		  }
 	});
-	return;
+	
 }
 
 window.onload=function(){
@@ -251,7 +271,37 @@ window.onload=function(){
 		  dataType: "json"
 		});
 }	
-
+function check(){
+	var temp = document.cookie.split(";");
+	var name = "";
+	for(var i=0;i<temp.length;i++){
+		if("user"==temp[i].split("=")[0]){
+			name = temp[i].split("=")[1];
+		}
+	}
+	if(name==""){
+		layer.msg("请先登陆");
+		return false;
+	}else{
+		return true;
+	}
+}
+//前往检索页
+function toList(){
+	if(check()){
+		location.href="list";
+	}else{
+		layer.msg("请先登陆");
+	}
+}
+//前往目录
+function toShowAll(){
+	if(check()){
+		location.href="toShowAll";
+	}else{
+		layer.msg("请先登陆");
+	}
+}
 
 
 </script>

@@ -78,7 +78,7 @@
 			<!-- 获取游戏id -->
 			<input type="text" name="gameId" value="${id}" style="display:none"/>
 			<!-- 获取用户名 -->
-			<input type="text" id="user" name="user"  />
+			<input type="text" id="user" name="user" style="display:none" />
 
   			
   			<div class="layui-form-item layui-form-text">

@@ -37,6 +37,9 @@
 		#exit{								
 			font-size: 20px;			
 		}
+		a{
+		cursor:pointer
+		}
 </style>
 	
   <meta charset="utf-8">
@@ -50,7 +53,7 @@
 <body class="layui-layout-body" style="background-color: #eeeeee">
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header">
-    <div class="layui-logo"><a href="../index">yanhan</a></div>
+    <div class="layui-logo"><a href="index">yanhan</a></div>
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
     
@@ -79,8 +82,10 @@
 <div class="layui-body">
     <!-- 内容主体区域 -->
 	<div style="padding: 15px;">
+		
    	 	<div class="d1" id="d1">
-   	 		<table class="layui-table">
+   	 	<div style="float: left">
+   	 		<table class="layui-table" style="width: 250px">
   				<colgroup>
     				<col width="150">
     				<col width="200">
@@ -92,11 +97,13 @@
       				<th>游戏名字</th>
 	      			</tr> 
  				</thead>
-  				<tbody>
+  				<tbody id="1">
     
   				</tbody>
 			</table>
-			<table class="layui-table">
+		</div>
+		<div style="float: left">
+			<table class="layui-table" style="width:250px">
   				<colgroup>
     				<col width="150">
     				<col width="200">
@@ -108,10 +115,47 @@
       				<th>游戏名字</th>
 	      			</tr> 
  				</thead>
-  				<tbody>
+  				<tbody  id="2">
     
   				</tbody>
 			</table>
+		</div>
+		<div style="float: left">
+			<table class="layui-table" style="width:250px">
+  				<colgroup>
+    				<col width="150">
+    				<col width="200">
+    				<col>
+  				</colgroup>
+  				<thead>
+    				<tr>
+      				<th>游戏ID</th>
+      				<th>游戏名字</th>
+	      			</tr> 
+ 				</thead>
+  				<tbody  id="3">
+    
+  				</tbody>
+			</table>
+		</div>
+		<div style="float: left">
+			<table class="layui-table" style="width:250px">
+  				<colgroup>
+    				<col width="150">
+    				<col width="200">
+    				<col>
+  				</colgroup>
+  				<thead>
+    				<tr>
+      				<th>游戏ID</th>
+      				<th>游戏名字</th>
+	      			</tr> 
+ 				</thead>
+  				<tbody  id="4">
+    
+  				</tbody>
+			</table>
+		</div>
    	 	</div>
     </div>
 </div>
@@ -150,13 +194,47 @@ window.onload=function(){
 				layer.msg("获取游戏失败");
 			}
 			var game = data.data;
-			for(var i=0;i<game.length;i++){
-				$("tbody").append("<tr><td>"+game[i].id+"</td><td>"+game[i].cn+"</td>");
+			for(var i=0;i<game.length;i+=4){
+				$("#1").append("<tr><td>"+game[i].id+"</td><td>"+game[i].cn+"</td>");
+				$("#2").append("<tr><td>"+game[i+1].id+"</td><td>"+game[i+1].cn+"</td>");
+				$("#3").append("<tr><td>"+game[i+2].id+"</td><td>"+game[i+2].cn+"</td>");
+				$("#4").append("<tr><td>"+game[i+3].id+"</td><td>"+game[i+3].cn+"</td>");
 			}
 			
 		  },
 		  dataType: "json"
 		});
+}
+function check(){
+	var temp = document.cookie.split(";");
+	var name = "";
+	for(var i=0;i<temp.length;i++){
+		if("user"==temp[i].split("=")[0]){
+			name = temp[i].split("=")[1];
+		}
+	}
+	if(name==""){
+		layer.msg("请先登陆");
+		return false;
+	}else{
+		return true;
+	}
+}
+//前往检索页
+function toList(){
+	if(check()){
+		location.href="list";
+	}else{
+		layer.msg("请先登陆");
+	}
+}
+//前往目录
+function toShowAll(){
+	if(check()){
+		location.href="toShowAll";
+	}else{
+		layer.msg("请先登陆");
+	}
 }
 </script>
 </body>

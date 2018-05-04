@@ -140,17 +140,15 @@
         <li class="layui-nav-item">
         <a href="index">
         <i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe68e;</i>  
-            首页
+        	首页
         </a>       
       </li>
-      
-      
-      <li class="layui-nav-item"><a href="list">
+      <li class="layui-nav-item"><a onclick="toList()">
       <i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe705;</i>
-        档案</a></li>
-      <li class="layui-nav-item"><a href="">
-        <i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe641;</i>
-        技术文档</a></li>
+      	档案</a></li>
+      <li class="layui-nav-item"><a onclick="toShowAll()">
+      	<i class="layui-icon" style="font-size: 30px; color: #009688;">&#xe641;</i>
+    	目录</a></li>
       
     </ul>
    
@@ -346,6 +344,37 @@ function toGame(id){
 		  dataType: "json"
 		});
  }
+ function check(){
+		var temp = document.cookie.split(";");
+		var name = "";
+		for(var i=0;i<temp.length;i++){
+			if("user"==temp[i].split("=")[0]){
+				name = temp[i].split("=")[1];
+			}
+		}
+		if(name==""){
+			layer.msg("请先登陆");
+			return false;
+		}else{
+			return true;
+		}
+	}
+	//前往检索页
+	function toList(){
+		if(check()){
+			location.href="list";
+		}else{
+			layer.msg("请先登陆");
+		}
+	}
+	//前往目录
+	function toShowAll(){
+		if(check()){
+			location.href="toShowAll";
+		}else{
+			layer.msg("请先登陆");
+		}
+	}
 </script>
 </body>
 </html>
