@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,8 +49,9 @@ ClassPathXmlApplicationContext ctx;
 	@Test
 	public void findUser() throws SQLException{
 		UserDao dao = ctx.getBean("userDao",UserDao.class);
-		User user = dao.findUserByName("test");
-		System.out.println(user);
+		User user = dao.findUserByName("test003");
+		
+		System.out.println(user.getLike());
 	}
 	
 	@Test
@@ -64,10 +66,34 @@ ClassPathXmlApplicationContext ctx;
 	@Test
 	public void recommend() throws SQLException{
 		UserDao dao = ctx.getBean("userDao",UserDao.class);
-		List list = dao.recommend("");
-		Map map = new HashMap();
+
+		String str = "AAG,STG,ACT,FTG,ARPG,SIM,SPG";
+		int temp = 0;
+		int temp2 = 0;
+		temp = str.indexOf(",");
+		String sub = str.substring(0,temp);
+		System.out.println(sub);
+		temp2 = str.indexOf(",",temp+1);
+		String sub2 = str.substring(temp+1, temp2);
+		System.out.println(sub2);
+		while(true){
+			
+			temp = str.indexOf(",",temp2+1);
+			if(temp==-1){
+				break;
+			}
+			sub = str.substring(temp2+1,temp);
+			System.out.println(sub);
+			temp2 = str.indexOf(",",temp+1);
+			if(temp2==-1){
+				break;
+			}
+			sub2 = str.substring(temp+1, temp2);
+			System.out.println(sub2);
+			
+		}
 		
-		System.out.println(list.toString());
+		System.out.println(dao.recommend2("AAG"));
 	}
 	
 	@Test

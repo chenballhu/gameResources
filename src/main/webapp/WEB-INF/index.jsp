@@ -319,7 +319,7 @@ window.onload=function(){
 				  type: 'GET',
 				  url: "recommend",
 				  contentType:"application/UTF-8",
-				  data:{"like":like},
+				  data:{"userName":name},
 				  success: function(data2){
 					  if(data2.state==1){
 						  layer.msg(data2.message);

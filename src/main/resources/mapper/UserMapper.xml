@@ -15,6 +15,9 @@
 	<select id="recommend" parameterType="Object" resultType="Map">
 		select * from list_rank where `kind` like '%${like}%' order by hot DESC limit 5
 	</select>
+	<select id="recommend2" parameterType="Object" resultType="Map">
+		select * from list_rank where `kind` like '%${like}%'
+	</select>
 	<insert id="createUser" parameterType="entity.User">
 		insert into userInfo(name,password,permission,sex,is_adult,`like`)values(#{name},#{password},#{permission},#{sex},#{adult},#{like})
 	</insert>

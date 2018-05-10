@@ -122,14 +122,80 @@ public class UserController {
 	//游戏推荐
 	@ResponseBody
 	@RequestMapping("/recommend")
-	public Object recommend(String like){
-		try{
-			List<String> list = userDao.recommend(like);
-			return new JsonResult(list);
-		}catch(RuntimeErrorException e){
-			e.printStackTrace();
-			return new JsonResult(0,e);
+	public Object recommend(String userName){
+		User user = userDao.findUserByName(userName);
+		if(user==null){
+			return new JsonResult(1,"","立刻登陆查看今日推荐");
 		}
+		List send = new ArrayList();
+		String str = user.getLike();
+		int temp = 0;
+		int temp2 = 0;
+		temp = str.indexOf(",");
+		//喜欢类型只有一个
+		if(temp==-1){
+			List list = userDao.recommend2(str);
+			for(int i=0;i<5;i++){
+				int rand = (int)(Math.random()*list.size());
+				//判断是否成人
+				if(!user.isAdult()){
+					Map map = (Map) list.get(rand);
+					if("1".equals(map.get("adult"))){
+						
+					}else{
+						send.add(list.get(rand));
+					}
+				}else{
+					send.add(list.get(rand));
+				}
+			}
+			return new JsonResult(send);
+		}
+		//喜欢多个
+		String sub = str.substring(0,temp);
+		List list = userDao.recommend2(sub);
+		temp2 = str.indexOf(",",temp+1);
+		String sub2 = str.substring(temp+1, temp2);
+		list.addAll(userDao.recommend2(sub2));
+		while(true){
+			
+			temp = str.indexOf(",",temp2+1);
+			if(temp==-1){
+				break;
+			}
+			sub = str.substring(temp2+1,temp);
+			list.addAll(userDao.recommend2(sub));
+			temp2 = str.indexOf(",",temp+1);
+			if(temp2==-1){
+				break;
+			}
+			sub2 = str.substring(temp+1, temp2);
+			list.addAll(userDao.recommend2(sub2));
+			
+		}
+		list.addAll(userDao.recommend2(str.substring(str.lastIndexOf(",")+1)));
+		
+		
+		for(int i=0;i<5;i++){
+			int rand = (int)(Math.random()*list.size());
+			//判断是否成人
+			if(!user.isAdult()){
+				Map map = (Map) list.get(rand);
+				if("1".equals(map.get("adult"))){
+					
+				}else{
+					send.add(list.get(rand));
+				}
+			}else{
+				send.add(list.get(rand));
+			}
+			
+			
+			
+		}
+		
+			return new JsonResult(send);
+		
 	}
 	//游戏内页
 	@RequestMapping(value="/game")

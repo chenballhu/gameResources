@@ -20,6 +20,7 @@ public interface UserDao {
 	void upRank(@Param("hot")int hot,@Param("id")int id);
 	//推荐
 	List<String> recommend(@Param("like")String like);
+	List recommend2(@Param("like")String like);
 	//游戏内页
 	Map<Object,String> showGame(int id);
 	//搜索
