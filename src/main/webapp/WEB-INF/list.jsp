@@ -7,11 +7,14 @@
 <style type="text/css">
 		#d1{
 			width:400px;height:450px;
-			background-color: #2F4056;
+			background-color: white;
+			border-style: solid; 
+			border-width: 5px;
+			border-color:black;
 			position: absolute;z-index: 3;
 			top:70px;right:70px;
 			font-size: 30px;
-			color: white;			
+			color: gray;			
 		}	
         .list-item-name{
           width: 200px;
@@ -44,6 +47,9 @@
         }
         a{
         cursor:pointer
+        }
+        #game-list div{
+        font-size: 24px;
         }
         /*#l1l{
             width:200px;height:200px;
@@ -126,10 +132,12 @@
     <div id="d1" class="layui-anim layui-anim-scale">
 		<div id="index" >
 			<div>按首字母索引</div>
+			<div style="margin-left: 10px">
 			<a>A</a>&nbsp;&nbsp;<a>B</a>&nbsp;&nbsp;<a>C</a>&nbsp;&nbsp;<a>D</a>&nbsp;&nbsp;<a>E</a>&nbsp;&nbsp;<a>F</a>&nbsp;&nbsp;<a>G</a>&nbsp;&nbsp;
 			<a>H</a>&nbsp;&nbsp;<a>I</a>&nbsp;&nbsp;<a>J</a>&nbsp;&nbsp;<a>K</a>&nbsp;&nbsp;<a>L</a>&nbsp;&nbsp;<a>N</a>&nbsp;&nbsp;<a>M</a>&nbsp;&nbsp;
 			<a>O</a>&nbsp;&nbsp;<a>P</a>&nbsp;&nbsp;<a>Q</a>&nbsp;&nbsp;<a>R</a>&nbsp;&nbsp;<a>S</a>&nbsp;&nbsp;<a>T</a>&nbsp;&nbsp;<a>U</a>&nbsp;&nbsp;
 			<a>V</a>&nbsp;&nbsp;<a>W</a>&nbsp;&nbsp;<a>X</a>&nbsp;&nbsp;<a>Y</a>&nbsp;&nbsp;<a>Z</a>&nbsp;&nbsp;<a>#</a>
+			</div>
 		</div>
 		
 	</div>
@@ -263,7 +271,8 @@ window.onload=function(){
 					        	
 					        	$("#game-list").prepend('<div class="list-item"><div class="list-item-name"><img src="pictures/icon/' +list[i].station + '.jpg">'
 					        			+ '</div><div class="list-item-content" onclick="toGame('+list[i].id+')">中文名：' + list[i].cn + '<br>' + '英文名：' + list[i].en + '<br>' 
-					        			+ '游戏类型：' + list[i].kind + '<br>' + '出版商：' + list[i].company + '<br>' + '游戏人数：' + list[i].player + '</div></div>');
+					        			+ '游戏类型：' + list[i].kind + '<br>' + '出版商：' + list[i].company + '<br>' + '游戏人数：' + list[i].player + '</div><div class="list-item-name"><img style="height:200px" src="pictures/'
+					        			+list[i].station+'/'+list[i].id+'/'+list[i].id+'.jpg"></div></div>');
 					        	if(i==list.length-1){
 					        		return;
 					        	}
@@ -328,7 +337,8 @@ function toGame(id){
 					        	
 					        	$("#game-list").prepend('<div class="list-item"><div class="list-item-name"><img src="pictures/icon/' +list[i].station + '.jpg">'
 					        			+ '</div><div class="list-item-content" onclick="toGame('+list[i].id+')">中文名：' + list[i].cn + '<br>' + '英文名：' + list[i].en + '<br>' 
-					        			+ '游戏类型：' + list[i].kind + '<br>' + '出版商：' + list[i].company + '<br>' + '游戏人数：' + list[i].player + '</div></div>');
+					        			+ '游戏类型：' + list[i].kind + '<br>' + '出版商：' + list[i].company + '<br>' + '游戏人数：' + list[i].player + '</div><div class="list-item-name"><img style="height:200px" src="pictures/'
+					        			+list[i].station+'/'+list[i].id+'/'+list[i].id+'.jpg"></div></div>');
 					        	if(i==list.length-1){
 					        		return;
 					        	}

@@ -8,20 +8,26 @@
 <style type="text/css">
 		#d1{
 			width:400px;height:450px;
-			background-color: #2F4056;
+			background-color: white;
 			position: absolute;z-index: 3;
+			border-style: solid; 
+			border-width: 5px;
+			border-color:black;
 			top:10px;right:70px;
 			font-size: 30px;
-			color: white;			
+			color: gray;			
 		}	
 		
 		#d2{
 			width:400px;height:480px;
-			background-color: #2F4056;
+			background-color: white;
+			border-style: solid; 
+			border-width: 5px;
+			border-color:black;
 			position: absolute;z-index: 3;
 			top:480px;right:70px;
 			font-size: 30px;
-			color: white;
+			color: gray;
 		}	
 		
 		#hotOnclick{
