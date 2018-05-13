@@ -73,6 +73,9 @@
 		a{
 		cursor:pointer
 		}
+		.layui-body{
+		font-size: 30px;
+		}
 </style>
 	
   <meta charset="utf-8">
